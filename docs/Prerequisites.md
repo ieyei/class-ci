@@ -1,6 +1,13 @@
 # Prerequisites
 
 ## GitHub 설정
+### Sample code git clone
+실습을 위해 sample code `git clone`을 한다.
+```
+# cd ~/path 필요
+git clone xxx
+```
+
 ### Git 인증
 > [!NOTE]  
 > 만약 push 과정에서, username, password 를 매번 넣어야 하는 상황이 번거롭다면 아래와 같이 cache 설정을 통해 지정 된 시간(기본 15분) 동안 cache 기반으로 로그인 가능.
