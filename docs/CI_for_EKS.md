@@ -1,9 +1,14 @@
 # Create CI pipeline
 
 ## GitHub Action
+### GitHub Repo name 설정
+```
+export GIT_REPO_NAME='MSA_REF_PATTERN'
+```
+
 ### `.github` 디렉토리 생성
 ```
-cd ~/environment/amazon-eks-frontend
+cd ~/environment/$GIT_REPO_NAME
 mkdir -p ./.github/workflows
 ```
 
@@ -14,7 +19,7 @@ cloud9에서 $ECR_REPOSITORY 설정 필요!!!!!
 
 **main-build.yaml for V1 [main branch]**
 ```
-cd ~/environment/amazon-eks-frontend/.github/workflows
+cd ~/environment/$GIT_REPO_NAME/.github/workflows
 cat > main-build.yaml <<EOF
 
 name: Build Main
@@ -22,8 +27,8 @@ name: Build Main
 on:
   push:
     branches: [ main ]
-    paths:
-      - MSA_REF_BIZ_ORDER/**
+  pull_request:
+    branches: [ "main" ]
       
 jobs:
   build:
@@ -61,7 +66,31 @@ jobs:
           ./gradlew -p MSA_REF_BIZ_ORDER clean build
           cp ./MSA_REF_BIZ_ORDER/build/libs/*.jar ./app.jar
           docker build -t \$ECR_REGISTRY/\$ECR_REPOSITORY:\$IMAGE_TAG .
-          docker push \$ECR_REGISTRY/\$ECR_REPOSITORY:\$IMAGE_TAG
+
+      - name: Run Trivy vulnerability scanner
+        env:
+          ECR_REGISTRY: \${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: \${{ steps.image-info.outputs.ecr_repository }}
+          IMAGE_TAG: \${{ steps.image-info.outputs.image_tag }}      
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: \$ECR_REGISTRY/\$ECR_REPOSITORY:\$IMAGE_TAG
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+          
+      - name: Push image to Amazon ECR
+        id: image-push
+        env:
+          ECR_REGISTRY: \${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: \${{ steps.image-info.outputs.ecr_repository }}
+          IMAGE_TAG: \${{ steps.image-info.outputs.image_tag }}
+        run: |
+          echo "::set-output name=ecr_repository::\$ECR_REPOSITORY"
+          echo "::set-output name=image_tag::\$IMAGE_TAG"
+          docker push \$ECR_REGISTRY/\$ECR_REPOSITORY:\$IMAGE_TAG          
 
 EOF
 ```
@@ -181,6 +210,12 @@ EOF
 
 ### GitHub Action workflow 확인
 1. Code를 push하여 github action workflow 실행.
+```
+cd ~/environment/$GIT_REPO_NAME
+git add .
+git commit -m "Add github action build script"
+git push origin main
+```
 2. Browser에서 `run workflow` 버튼 클릭하여 실행.
 
 정상 build 확인 후 image가 ECR에 제대로 push 되었는지 확인.
