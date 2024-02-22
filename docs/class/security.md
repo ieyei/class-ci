@@ -4,7 +4,32 @@
 
 ![trivy](../../images/class/trivy_logo.png)
 
-### trivy 실습(20)
+Targets (what Trivy can scan):
+* Container Image
+* Filesystem
+* Git Repository (remote)
+* Virtual Machine Image
+* Kubernetes
+* AWS
+
+Scanners (what Trivy can find there):
+* OS packages and software dependencies in use (SBOM)
+* Known vulnerabilities (CVEs)
+* IaC issues and misconfigurations
+* Sensitive information and secrets
+* Software licenses
+
+## trivy 실습(20)
+### Installation
+
+```
+curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.49.1
+```
+
+특정 이미지(python:3.4-alpine)의 취약점 중 CRITICAL,HIGH 2가지만 조회하는 경우
+```
+trivy image -s CRITICAL,HIGH python:3.4-alpine
+```
 
 ### **Static code analysis(10)**
 
