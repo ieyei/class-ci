@@ -65,7 +65,7 @@ cat ~/.ssh/id_rsa.pub
 2. Settings 선택
 3. Settings 상세페이지 좌측 Access > `SSH and GPG keys` 클릭
 4. ssh key 등록(Key 영역에 위에서 생성한 pub key 내용 붙여 넣기)
-![add ssh key](../images/add-ssh-key.png)
+![add ssh key](../../images/workshop/add-ssh-key.png)
 
 
 ### Sample code git fork
@@ -175,7 +175,7 @@ aws iam create-access-key --user-name github-action
 Repository 상단 `Settings` 클릭 후 좌측 메뉴 `Secrets and variables > Actions` 클릭.  
 `New repository secret` 버튼을 클릭하여 앞서 저장한 IAM User `github-action`의 `SecretAccessKey`, `AccessKeyId` 값을 Secret에 저장.  
 
-![actions secret](../images/action-secret1.png)
+![actions secret](../../images/workshop/action-secret1.png)
 
 Actions 클릭 후 Actions secrets and variables 화면에서 `new repository secret` 클릭 후 `AWS_ACCESS_KEY_ID`,`AWS_SECRET_ACCESS_KEY` 각각 등록.
 
@@ -186,7 +186,7 @@ Name: AWS_SECRET_ACCESS_KEY
 Secret: SecretAccessKey 의 값
 
 등록 후 화면
-![actions secret registration](../images/action-secret2.png)
+![actions secret registration](../../images/workshop/action-secret2.png)
 
 
 ## AWS Route53
