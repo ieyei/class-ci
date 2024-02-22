@@ -2,19 +2,21 @@
 
 
 ## Class
-CI Overview  
-Cloud Environment  
-Branch Strategy  
-Pull Request Guide  
-Mono Repo  
-Cloud Native 12 Factor  
-Flyway  
-Security  
-GitHub Action  
+[0. CI Overview](./docs/class/ci_overview.md)  
+[1. Cloud Environment](./docs/class/cloud_env.md)  
+[2. Branch Strategy](./docs/class/branch_strategy.md)  
+[3. Pull Request Guide](./docs/class/pull_request_guide.md)  
+[4. Mono Repo](./docs/class/mono_repo.md)  
+[5. Cloud Native 12 Factor](./docs/class/cloud_native_12_factor.md)  
+[6. Flyway](./docs/class/flyway.md)  
+[7. Security](./docs/class/security.md)  
+[8. GitHub Action](./docs/class/github_action.md)  
+
 
 
 
 ---
+Backup
 [0. Overview](docs/workshop/Overview.md)  
 [1. Prerequisites](docs/workshop/Prerequisites.md)  
 [2. Setting workspace](docs/workshop/Setting_workspace.md)  
