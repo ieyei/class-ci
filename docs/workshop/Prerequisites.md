@@ -189,6 +189,3 @@ Secret: SecretAccessKey 의 값
 ![actions secret registration](../../images/workshop/action-secret2.png)
 
 
-## AWS Route53
-
-## Certification

@@ -1,6 +1,16 @@
 # Hello 
 
 
+## Workshop
+
+[1. Prerequisites](docs/workshop/Prerequisites.md)  
+[2. Flyway](./docs/class/flyway.md)    
+[3. Security](./docs/class/security.md)    
+[4. GitHub Action](docs/workshop/CI_for_EKS.md)
+
+
+
+
 ## Class
 [0. CI Overview](./docs/class/ci_overview.md)  
 [1. Cloud Environment](./docs/class/cloud_env.md)  
