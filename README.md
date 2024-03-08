@@ -4,7 +4,7 @@
 ## Workshop
 
 [1. Cloud9](docs/workshop/Cloud9.md)  
-[1. Prerequisites](docs/workshop/Prerequisites.md)  
+[2. Configuration](docs/workshop/Configuration.md)  
 [3. Flyway](./docs/class/flyway.md)    
 [4. Security](./docs/class/security.md)    
 [5. GitHub Action](docs/workshop/CI_for_EKS.md)
@@ -29,7 +29,7 @@
 ---
 Backup
 [0. Overview](docs/workshop/Overview.md)  
-[1. Prerequisites](docs/workshop/Prerequisites.md)  
+[1. Prerequisites](docs/workshop/Configuration)  
 [2. Setting workspace](docs/workshop/Setting_workspace.md)  
 [Container Image](docs/workshop/Container_Image.md)  
 [CI for EKS](docs/workshop/CI_for_EKS.md)  

@@ -4,7 +4,7 @@
 AWS CLI를 통해, 이미지 리포지토리를 생성.  
 repository name: msa-ref-biz-order  
 ```
-export ECR_REPOSITORY="msa-ref-biz-order"
+export ECR_REPOSITORY="ci-sample"
 
 aws ecr create-repository \
 --repository-name $ECR_REPOSITORY \
@@ -16,9 +16,14 @@ aws ecr create-repository \
 ### Git 인증
 > [!NOTE]  
 > 만약 push 과정에서, username, password 를 매번 넣어야 하는 상황이 번거롭다면 아래와 같이 cache 설정을 통해 지정 된 시간(기본 15분) 동안 cache 기반으로 로그인 가능.
+ 
+username, email 내용을 본인에 맞게 변경
 ```
-git config --global user.name USERNAME
-git config --global user.email EMAIL
+export USERNAME="MY USERNAME"
+export EMAIL="MY EMAIL"
+
+git config --global user.name $USERNAME
+git config --global user.email $EMAIL
 git config credential.helper store
 git config --global credential.helper 'cache --timeout TIME YOU WANT'
 ```
@@ -68,29 +73,18 @@ cat ~/.ssh/id_rsa.pub
 ![add ssh key](../../images/workshop/add-ssh-key.png)
 
 
-### Sample code git fork
-실습을 위해 sample code `git fork`을 한다.
+### Sample code git clone
+실습을 위해 sample code `git clone`을 한다.
 (Copy the main branch only 체크 해제)
 
 ### Sample code git clone
 Terminal에서 git clone
+SAMPLE-REPO="XXXXX"
 > [!NOTE]
 > Are you sure you want to continue connecting (yes/no/[fingerprint])? --> 묻는 단계가 나올 경우 `yes`
 
 ```
-$ git clone git@github.com:ieyei/MSA_REF_PATTERN.git
-Cloning into 'MSA_REF_PATTERN'...
-The authenticity of host 'github.com (20.200.245.247)' can't be established.
-ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
-This key is not known by any other names
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
-remote: Enumerating objects: 332, done.
-remote: Counting objects: 100% (332/332), done.
-remote: Compressing objects: 100% (224/224), done.
-remote: Total 332 (delta 85), reused 292 (delta 54), pack-reused 0
-Receiving objects: 100% (332/332), 1.53 MiB | 1.73 MiB/s, done.
-Resolving deltas: 100% (85/85), done.
+$ git clone git@github.com:ieyei/class-ci.git
 ```
 
 ### CI 파이프라인을 위한 AWS IAM 생성 및 policy 설정
@@ -187,5 +181,3 @@ Secret: SecretAccessKey 의 값
 
 등록 후 화면
 ![actions secret registration](../../images/workshop/action-secret2.png)
-
-
