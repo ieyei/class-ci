@@ -3,10 +3,11 @@
 
 ## Workshop
 
+[1. Cloud9](docs/workshop/Cloud9.md)  
 [1. Prerequisites](docs/workshop/Prerequisites.md)  
-[2. Flyway](./docs/class/flyway.md)    
-[3. Security](./docs/class/security.md)    
-[4. GitHub Action](docs/workshop/CI_for_EKS.md)
+[3. Flyway](./docs/class/flyway.md)    
+[4. Security](./docs/class/security.md)    
+[5. GitHub Action](docs/workshop/CI_for_EKS.md)
 
 
 
