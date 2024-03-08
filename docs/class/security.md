@@ -19,7 +19,7 @@ Scanners (what Trivy can find there):
 * Sensitive information and secrets
 * Software licenses
 
-## trivy 실습(20)
+## trivy 실습
 ### Installation
 
 ```
@@ -31,7 +31,7 @@ curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/inst
 trivy image -s CRITICAL,HIGH python:3.4-alpine
 ```
 
-### **Static code analysis(10)**
+### **Static code analysis**
 
 **정의**
 
