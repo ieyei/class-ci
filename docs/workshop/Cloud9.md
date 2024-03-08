@@ -25,7 +25,7 @@ AWS Console에서 Cloud9 생성한 것을 확인합니다.
 ![cloud9-landing](../../images/workshop/cloud9-landing.png)
 
 ### Cloud9 에 패키지 설치
-#### Kubectl 설치
+#### **Kubectl 설치**
 EKS를 위한 kubectl 바이너리를 다운로드합니다. Kubernetes 버전 1.23 출시부터 공식적으로 Amazon EKS AMI에는 containerd가 유일한 런타임으로 포함됩니다.
 > [!NOTE]
 > Amazon EKS 클러스터 제어 영역과 마이너 버전이 하나 다른 kubectl 버전을 사용해야 합니다. 예를 들어 1.28 kubectl 클라이언트는 Kubernetes 1.27, 1.28, 1.29 클러스터와 함께 작동합니다.
@@ -58,7 +58,7 @@ source ~/.bashrc
 kubectl version --client
 ```
 
-#### homebrew 설치
+#### **Homebrew 설치**
 Homebrew는 Apple(또는 Linux 시스템)에서 제공하지 않는 유용한 패키지 관리자를 설치합니다.  
 
 > [!NOTE]
@@ -87,7 +87,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew -v
 ```
 
-#### helm 설치
+#### **Helm 설치**
 Helm은 쿠버네티스를 위한 패키지 관리 도구입니다.  
 
 설치 
