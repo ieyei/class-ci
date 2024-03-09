@@ -1,6 +1,6 @@
 ## Security
 
-### Image Scan(10)
+### Security Scan
 
 ![trivy](../../images/class/trivy_logo.png)
 
@@ -306,6 +306,98 @@ https://github.com/aquasecurity/trivy/blob/main/pkg/fanal/secret/builtin-rules.g
 ```
 trivy image --scanners license python:3.4-alpine
 ```
+<details>
+<summary>Result</summary>
+
+```bash
+OS Packages (license)
+
+Total: 32 (UNKNOWN: 4, LOW: 15, MEDIUM: 2, HIGH: 11, CRITICAL: 0)
+
+┌────────────────────────┬───────────────┬────────────────┬──────────┐
+│        Package         │    License    │ Classification │ Severity │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ alpine-baselayout      │ GPL-2.0       │ Restricted     │ HIGH     │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ alpine-keys            │ MIT           │ Notice         │ LOW      │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ apk-tools              │ GPL-2.0       │ Restricted     │ HIGH     │
+├────────────────────────┤               │                │          │
+│ busybox                │               │                │          │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ ca-certificates        │ MPL-2.0       │ Reciprocal     │ MEDIUM   │
+│                        ├───────────────┼────────────────┼──────────┤
+│                        │ GPL-2.0       │ Restricted     │ HIGH     │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ ca-certificates-cacert │ MPL-2.0       │ Reciprocal     │ MEDIUM   │
+│                        ├───────────────┼────────────────┼──────────┤
+│                        │ GPL-2.0       │ Restricted     │ HIGH     │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ expat                  │ MIT           │ Notice         │ LOW      │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ gdbm                   │ GPL-3.0       │ Restricted     │ HIGH     │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ libbz2                 │ BSD-3-Clause  │ Notice         │ LOW      │
+├────────────────────────┤               │                │          │
+│ libc-utils             │               │                │          │
+├────────────────────────┼───────────────┤                │          │
+│ libcrypto1.1           │ OpenSSL       │                │          │
+├────────────────────────┼───────────────┤                │          │
+│ libffi                 │ MIT           │                │          │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ libressl2.7-libcrypto  │ custom        │ Non Standard   │ UNKNOWN  │
+├────────────────────────┤               │                │          │
+│ libressl2.7-libssl     │               │                │          │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ libssl1.1              │ OpenSSL       │ Notice         │ LOW      │
+├────────────────────────┼───────────────┤                │          │
+│ libtls-standalone      │ ISC           │                │          │
+├────────────────────────┼───────────────┤                │          │
+│ musl                   │ MIT           │                │          │
+├────────────────────────┤               │                │          │
+│ musl-utils             │               │                │          │
+│                        ├───────────────┤                │          │
+│                        │ BSD-3-Clause  │                │          │
+│                        ├───────────────┼────────────────┼──────────┤
+│                        │ GPL-2.0       │ Restricted     │ HIGH     │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ ncurses-libs           │ MIT           │ Notice         │ LOW      │
+├────────────────────────┤               │                │          │
+│ ncurses-terminfo       │               │                │          │
+├────────────────────────┤               │                │          │
+│ ncurses-terminfo-base  │               │                │          │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ readline               │ GPL-3.0       │ Restricted     │ HIGH     │
+├────────────────────────┼───────────────┤                │          │
+│ scanelf                │ GPL-2.0       │                │          │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ sqlite-libs            │ Public-Domain │ Non Standard   │ UNKNOWN  │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ ssl_client             │ GPL-2.0       │ Restricted     │ HIGH     │
+├────────────────────────┤               │                │          │
+│ xz-libs                │               │                │          │
+│                        ├───────────────┼────────────────┼──────────┤
+│                        │ Public-Domain │ Non Standard   │ UNKNOWN  │
+├────────────────────────┼───────────────┼────────────────┼──────────┤
+│ zlib                   │ Zlib          │ Notice         │ LOW      │
+└────────────────────────┴───────────────┴────────────────┴──────────┘
+
+Python (license)
+
+Total: 3 (UNKNOWN: 1, LOW: 2, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+
+┌────────────┬─────────┬────────────────┬──────────┐
+│  Package   │ License │ Classification │ Severity │
+├────────────┼─────────┼────────────────┼──────────┤
+│ wheel      │ MIT     │ Notice         │ LOW      │
+├────────────┤         │                │          │
+│ pip        │         │                │          │
+├────────────┼─────────┼────────────────┼──────────┤
+│ setuptools │ UNKNOWN │ Non Standard   │ UNKNOWN  │
+└────────────┴─────────┴────────────────┴──────────┘
+```
+</details>
+
 
 ### Target - Filesystem
 filesystem scan 을 위해서 git clone
