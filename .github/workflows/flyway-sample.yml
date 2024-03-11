@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    environment: ECR
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
