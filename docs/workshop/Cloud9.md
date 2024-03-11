@@ -24,6 +24,56 @@ AWS Console에서 Cloud9 생성한 것을 확인합니다.
 "Open"을 눌러 Cloud9 IDE를 오픈합니다.
 ![cloud9-landing](../../images/workshop/cloud9-landing.png)
 
+### Cloud9 IAM Role 생성 및 변경
+Administrator access 정책을 가진 IAM Role을 생성하여 AWS Cloud9에 할당.
+> [!NOTE]
+> 본 실습의 경우, AdministratorAccess 정책을 사용하지만 실제 프로덕션 환경을 구동할 때에는 최소 권한을 부여하는 것이 적합합니다.
+
+#### Role 생성
+1. AdministratorAccess 권한을 가진 role 생성
+Search - IAM - 좌측 Access management 영역 Roles 선택 - Create role 클릭
+![create-role1](../../images/workshop/create-role0.png)
+
+2. Step 1 Select trusted entity:  Trusted entity type - AWS service, Use case - EC2 선택
+![create-role1](../../images/workshop/create-role1.png)
+3. Permissions policies 에서 `AdministratorAccess` 체크 후 Next
+4. Role name `cloud9-admin` 입력 후 Create role 버튼 클릭
+
+#### Cloud9에 Role 부여
+
+1. [EC2 Instance page](https://console.aws.amazon.com/ec2/v2/home?#Instances:sort=desc:launchTime)를 클릭하여 EC2 인스턴스 페이지에 접속
+2. 해당 인스턴스를 선택 후, Actions > Security > Modify IAM Role을 클릭
+   ![create-role1](../../images/workshop/iam-role1.png)
+3. IAM Role에서 `cloud9-admin` 선택 후 Update IAM role 클릭
+   ![create-role1](../../images/workshop/iam-role2.png)
+
+### Cloud9에서 IAM 설정 업데이트
+AWS Cloud9의 경우, IAM credentials을 동적으로 관리 따라서 이 credentials을 비활성화 하고 조금 전 생성한 IAM role을 부여  
+
+1. AWS Cloud9 IDE 접속 - 우측 상단 기어 아이콘 클릭 
+2. Credentials 에서 AWS managed temporary credentials 비활성화
+   ![create-role1](../../images/workshop/iam-role3.png)
+3. Temporary credentials이 없는지 확실히 하기 위해 기존의 자격 증명 파일도 제거
+```bash
+rm -vf ${HOME}/.aws/credentials 
+```
+4. `GetCallerIdentity CLI` 명령어를 통해, Cloud9 IDE가 올바른 IAM Role을 사용하고 있는지 확인
+```bash
+aws sts get-caller-identity --query Arn | grep cloud9-admin
+```
+
+### Cloud9 환경 변수 설정
+환경변수: ACCOUNT_ID, AWS_REGION 정보 설정
+```bash
+# ACCOUNT_ID
+export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
+echo "export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)" >> ~/.bashrc
+
+# AWS_REGION
+export AWS_REGION=ap-northeast-2
+echo "export AWS_REGION=ap-northeast-2" >> ~/.bashrc
+```
+
 ### Cloud9 에 패키지 설치
 #### **Kubectl 설치**
 EKS를 위한 kubectl 바이너리를 다운로드합니다. Kubernetes 버전 1.23 출시부터 공식적으로 Amazon EKS AMI에는 containerd가 유일한 런타임으로 포함됩니다.
