@@ -3,6 +3,8 @@ name: Flyway-sample
 on:
   push:
     branches: [ "main" ]
+    paths: 
+    - 'code/flyway-example/*'
   pull_request:
     branches: [ "main" ]
     paths: 
