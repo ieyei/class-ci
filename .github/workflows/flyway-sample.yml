@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "main" ]
     paths: 
-    - 'code/flyway-example/*'
+    - './code/flyway-example/*'
   pull_request:
     branches: [ "main" ]
     paths: 
-    - 'code/flyway-example/*'
+    - './code/flyway-example/*'
 
 jobs:
   build:
@@ -42,6 +42,6 @@ jobs:
       run: |
         ./gradlew build
         cp ./build/libs/flyway_example-0.0.1-SNAPSHOT.jar app.jar
-        docker build --file Dockerfile -t main-${{github.run_number}} .
+        docker build --file Dockerfile --build-arg CI_ENVIRONMENT=${{ vars.CI_ENVIRONMENT }} -t main-${{github.run_number}} .
         docker image tag main-${{github.run_number}} $ECR_REGISTRY/$ECR_REPOSITORY:main-${{github.run_number}}
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:main-${{github.run_number}}
