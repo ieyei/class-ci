@@ -30,14 +30,16 @@ cloud9에서 $ECR_REPOSITORY 설정 필요!!!!!
 cd ~/environment/$GIT_REPO_NAME/.github/workflows
 cat > main-build.yaml <<EOF
 
-name: Build Main
+name: Build-Main
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
+    paths: 
     - './code/flyway-example/*'
   pull_request:
     branches: [ "main" ]
+    paths: 
     - './code/flyway-example/*'
       
 jobs:
@@ -70,15 +72,15 @@ jobs:
         id: image-info
         env:
           ECR_REGISTRY: \${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: $ECR_REPOSITORY
+          ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: v1
         run: |
-          echo "::set-output name=ecr_repository::\$ECR_REPOSITORY"
+          echo "::set-output name=ecr_repository::\${{ vars.ECR_REPOSITORY }}"
           working-directory: ./code/flyway-example
           ./gradlew clean build
           cp ./build/libs/*.jar ./app.jar
           docker build --file Dockerfile --build-arg CI_ENVIRONMENT=${{ vars.CI_ENVIRONMENT }} -t main-${{github.run_number}} .
-          docker image tag main-${{github.run_number}} $ECR_REGISTRY/$ECR_REPOSITORY:main-${{github.run_number}}
+          docker image tag main-${{github.run_number}} $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:main-${{github.run_number}}
           
 
       - name: Run Trivy vulnerability scanner
@@ -88,7 +90,7 @@ jobs:
           IMAGE_TAG: \${{ steps.image-info.outputs.image_tag }}      
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: \$ECR_REGISTRY/\$ECR_REPOSITORY:main-${{github.run_number}}
+          image-ref: \$ECR_REGISTRY/\${{ vars.ECR_REPOSITORY }}:main-${{github.run_number}}
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
