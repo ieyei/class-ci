@@ -8,3 +8,6 @@
 [3. Flyway](./docs/workshop/flyway.md)    
 [4. Security](./docs/workshop/security.md)    
 [5. GitHub Action](docs/workshop/CI_for_EKS.md)
+
+
+[Cloudformation for cloud9](./docs/workshop/cf_cloud9.yaml)

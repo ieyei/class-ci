@@ -2,32 +2,82 @@
 
 
 ### Cloud9 IDE 생성
-AWS 서비스에서 Cloud9을 선택하고, "Create Environments" 버튼을 클릭합니다.  
+Search에서 Cloudformation 검색 - `Create Stack` With new resources 선택
+1. Create stack  
+   Upload a template file 선택 - Choose file(repository > docs > workshop > cf_cloud9.yaml 선택) - Next
+   ![Create stack](../../images/workshop/cf-cloud9-step1.png)
+2. Specify stack details  
+   ![Specify stack details](../../images/workshop/cf-cloud9-step2.png)
+3. Configure stack options  
+   ![Configure stack options](../../images/workshop/cf-cloud9-step3.png)
+4. Review and creates  
+   check - `I acknowledge that AWS CloudFormation might create IAM resources.`
+   ![Review and creates](../../images/workshop/cf-cloud9-step4.png)
+
+---
+Seoul region 확인 후 AWS 서비스에서 Cloud9을 선택하고, "Create Environments" 버튼을 클릭한다.  
 ![cloud9-create](../../images/workshop/cloud9-create.png)
 
-Cloud9 이름과 Descriiption을 설정합니다. 
+Cloud9 이름과 Descriiption을 설정한다. 
 
 ![create-env](../../images/workshop/create-env.png)
 
 ### Cloud9 구성
-Instance type을 변경합니다. 
+Instance type 변경
 
 Instance type - Additional instance types - t3.large  
 ![instance-type](../../images/workshop/instance-type.png)
 
 > [!NOTE]
-> Cloud9 하단의 설정 메뉴 중에 Network Setting은 변경하지 않으면, 자동으로 VPC Default로 설정되며 Cloud9 인스턴스는 해당 Default VPC의 public subnet에 자동으로 설치됩니다.
+> Cloud9 하단의 설정 메뉴 중에 Network Setting은 변경하지 않으면, 자동으로 VPC Default로 설정되며 Cloud9 인스턴스는 해당 Default VPC의 public subnet에 자동으로 설치된다.
 
-AWS Console에서 Cloud9 생성한 것을 확인합니다.
+AWS Console에서 Cloud9 생성 확인
 ![cloud9-list](../../images/workshop/cloud9-list.png)
+
+### Cloud9 storage 증설
+
+Cloud9 세부 페이지 - `Manage EC2 instance` 클릭
+![cloud9-detail](../../images/workshop/cloud9-detail.png)
+Block devices - Volume ID 클릭
+![ec2-storage1](../../images/workshop/ec2-storage1.png)
+check - Actions - Modify volume
+![modify-volume](../../images/workshop/modify-volume1.png)
+Size 30 으로 변경
+![modify-volume2](../../images/workshop/modify-volume2.png)
 
 "Open"을 눌러 Cloud9 IDE를 오픈합니다.
 ![cloud9-landing](../../images/workshop/cloud9-landing.png)
 
+Linux Partition 크기 조정
+```bash
+df -h
+sudo growpart /dev/nvme0n1 1
+```
+
+확인
+```bash
+lsblk
+NAME          MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
+nvme0n1       259:0    0  30G  0 disk 
+├─nvme0n1p1   259:1    0  30G  0 part /
+├─nvme0n1p127 259:2    0   1M  0 part 
+└─nvme0n1p128 259:3    0  10M  0 part /boot/efi
+```
+
+ex4 파일 시스템 확장
+```bash
+sudo resize2fs /dev/nvme0n1p1
+```
+
+reboot
+
+### AWS IAM Role
+![iam-role](../../images/workshop/iam_role.png)
+
 ### Cloud9 IAM Role 생성 및 변경
 Administrator access 정책을 가진 IAM Role을 생성하여 AWS Cloud9에 할당.
 > [!NOTE]
-> 본 실습의 경우, AdministratorAccess 정책을 사용하지만 실제 프로덕션 환경을 구동할 때에는 최소 권한을 부여하는 것이 적합합니다.
+> 본 실습의 경우, AdministratorAccess 정책을 사용하지만 실제 프로덕션 환경을 구동할 때에는 최소 권한을 부여하는 것이 적합.
 
 #### Role 생성
 1. AdministratorAccess 권한을 가진 role 생성
