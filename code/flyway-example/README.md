@@ -29,7 +29,7 @@ create table PERSON (
 The second script inserts some data into the `PERSON` table:
 
 ```sql:src/main/resources/db/migration/V2_1_0__my_first_migration2.sql
-insert into PERSON (ID, NAME) values (1, 'Axel');
+insert into PERSON (ID, NAME) values (1, 'Neal');
 insert into PERSON (ID, NAME) values (2, 'Mr. Foo');
 insert into PERSON (ID, NAME) values (3, 'Ms. Bar');
 ```
