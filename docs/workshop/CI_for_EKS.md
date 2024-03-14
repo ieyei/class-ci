@@ -100,9 +100,8 @@ jobs:
           echo "ecr_repository=${{ vars.ECR_REPOSITORY }}" >> $GITHUB_OUTPUT
           ./gradlew clean build
           cp ./build/libs/*.jar ./app.jar
-          docker build --file Dockerfile --build-arg CI_ENVIRONMENT=${{ vars.CI_ENVIRONMENT }} -t main2-${{github.run_number}} .
-          docker image tag main2-${{github.run_number}} $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:main2-${{github.run_number}}
-
+          docker build --file Dockerfile --build-arg CI_ENVIRONMENT=${{ vars.CI_ENVIRONMENT }} -t main-${{github.run_number}} .
+          docker image tag main-${{github.run_number}} $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:main-${{github.run_number}}
 
       - name: Run Trivy vulnerability scanner
         env:
@@ -111,7 +110,7 @@ jobs:
           IMAGE_TAG: ${{ steps.image-info.outputs.image_tag }}
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:main2-${{github.run_number}}
+          image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:main-${{github.run_number}}
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
@@ -125,7 +124,7 @@ jobs:
           ECR_REPOSITORY: ${{ steps.image-info.outputs.ecr_repository }}
           IMAGE_TAG: ${{ steps.image-info.outputs.image_tag }}
         run: |
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:main2-${{github.run_number}}  
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:main-${{github.run_number}}  
 
 ```
 
