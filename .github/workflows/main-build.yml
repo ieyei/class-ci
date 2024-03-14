@@ -64,7 +64,7 @@ jobs:
         working-directory: ./code/flyway-example
         run: |
           echo "ecr_registry=$ECR_REGISTRY" >> $GITHUB_OUTPUT
-          echo "ecr_repository=${{ vars.ECR_REPOSITORY }}" >>   
+          echo "ecr_repository=${{ vars.ECR_REPOSITORY }}" >> $GITHUB_OUTPUT
           ./gradlew clean build
           cp ./build/libs/*.jar ./app.jar
           docker build --file Dockerfile --build-arg CI_ENVIRONMENT=${{ vars.CI_ENVIRONMENT }} -t main2-${{github.run_number}} .
