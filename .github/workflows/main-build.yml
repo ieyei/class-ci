@@ -78,7 +78,7 @@ jobs:
           IMAGE_TAG: ${{ steps.image-info.outputs.image_tag }}
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ steps.image-info.outputs.ecr_registry }}/${{ vars.ECR_REPOSITORY }}:main2-${{github.run_number}}
+          image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:main2-${{github.run_number}}
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
