@@ -4,11 +4,8 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - code/flyway-example/**
-  pull_request:
-    branches: [ "main" ]
-    paths:
-      - code/flyway-example/**
+      - 'code/flyway-example/**'
+
   workflow_dispatch:
     inputs:
       logLevel:

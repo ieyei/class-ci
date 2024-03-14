@@ -15,7 +15,7 @@ public class FlywayExampleApplication {
 
     @RequestMapping(value = "/")
     public String hello() {
-        return "Hello World!!";
+        return "Hello World!!!!";
     }
 
 }
