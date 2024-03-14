@@ -1,11 +1,13 @@
-name: Build Main
+name: Build-Main
 
 on:
   push:
     branches: [ main ]
+    paths: 
     - './code/flyway-example/*'
   pull_request:
     branches: [ "main" ]
+    paths: 
     - './code/flyway-example/*'
       
 jobs:
