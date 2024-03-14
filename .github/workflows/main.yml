@@ -2,7 +2,7 @@ name: Build-Main
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
     paths: 
     - './code/flyway-example/*'
   pull_request:
