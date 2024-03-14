@@ -244,11 +244,13 @@ Resources:
                 - alternatives --set python /usr/bin/python3
                 - echo '=== INSTALL and CONFIGURE default software components ==='
                 - sudo -H -u ec2-user bash -c "pip install --user -U boto boto3 botocore awscli"
+                - wget http://s3.amazonaws.com/ec2metadata/ec2-metadata
+                - chmod +x ec2-metadata
                 - echo '=== Resizing the Instance volume'
                 - !Sub SIZE=${ExampleC9InstanceVolumeSize}
                 - !Sub REGION=${AWS::Region}
                 - |
-                  INSTANCEID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
+                  INSTANCEID=$(ec2-metadata --instance-id)
                   VOLUMEID=$(aws ec2 describe-instances \
                     --instance-id $INSTANCEID \
                     --query "Reservations[0].Instances[0].BlockDeviceMappings[0].Ebs.VolumeId" \
