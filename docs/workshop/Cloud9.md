@@ -2,19 +2,6 @@
 
 
 ### Cloud9 IDE 생성
-Search에서 Cloudformation 검색 - `Create Stack` With new resources 선택
-1. Create stack  
-   Upload a template file 선택 - Choose file(repository > docs > workshop > cf_cloud9.yaml 선택) - Next
-   ![Create stack](../../images/workshop/cf-cloud9-step1.png)
-2. Specify stack details  
-   ![Specify stack details](../../images/workshop/cf-cloud9-step2.png)
-3. Configure stack options  
-   ![Configure stack options](../../images/workshop/cf-cloud9-step3.png)
-4. Review and creates  
-   check - `I acknowledge that AWS CloudFormation might create IAM resources.`
-   ![Review and creates](../../images/workshop/cf-cloud9-step4.png)
-
----
 Seoul region 확인 후 AWS 서비스에서 Cloud9을 선택하고, "Create Environments" 버튼을 클릭한다.  
 ![cloud9-create](../../images/workshop/cloud9-create.png)
 
