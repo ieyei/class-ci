@@ -172,6 +172,8 @@ aws iam create-access-key --user-name github-action
 
 **AWS Credential 설정**  
 git fork
+github: https://github.com/ieyei/class-ci
+
 ![git fork](../../images/workshop/fork1.png)
 
 ![git fork detail](../../images/workshop/fork2.png)
