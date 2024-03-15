@@ -29,12 +29,7 @@ export USERNAME="MY USERNAME"
 export EMAIL="MY EMAIL"
 ```
 
-```bash
-git config --global user.name ${USERNAME}
-git config --global user.email ${EMAIL}
-git config credential.helper store
-git config --global credential.helper 'cache --timeout 3600'
-```
+
 
 > [!NOTE]
 > github MFA 인증을 사용 하고 있는 경우, personal access token을 만들어 password로 사용.
