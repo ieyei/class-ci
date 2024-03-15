@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'code/flyway-example/**'
+      - 'code/flyway-example/gradle/**'
 
   workflow_dispatch:
     inputs:
