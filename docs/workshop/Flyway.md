@@ -58,8 +58,12 @@ flyway -v
 ![flyway-validate](../../images/workshop/flyway-validate.png)
 
 ```shell
-./gradlew flywayValidate
+FLYWAY_URL=jdbc:h2:file:~/test \
+FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway validate
+
+Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
+Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
 ```
 
 #### 1.3.2 Migrate
@@ -69,8 +73,20 @@ flyway validate
 ![flyway-migrate](../../images/workshop/flyway-migrate.png)
 
 ```shell
-./gradlew flywayMigrate
+FLYWAY_URL=jdbc:h2:file:~/test \
+FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway migrate
+
+Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
+Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
+Successfully validated 4 migrations (execution time 00:00.006s)
+Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+Current version of schema "PUBLIC": << Empty Schema >>
+Migrating schema "PUBLIC" to version "1 - Create user table"
+Migrating schema "PUBLIC" to version "2 - Add admin user"
+Migrating schema "PUBLIC" to version "2.1 - Add some user"
+Migrating schema "PUBLIC" to version "3 - Create profile table"
+Successfully applied 4 migrations to schema "PUBLIC", now at version v3 (execution time 00:00.003s)
 ```
 
 #### 1.3.3 Info
@@ -80,8 +96,22 @@ flyway migrate
 ![flyway-info](../../images/workshop/flyway-info.png)
 
 ```shell
-./gradlew flywayInfo
+FLYWAY_URL=jdbc:h2:file:~/test \
+FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway info
+
+Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
+Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
+Schema version: << Empty Schema >>
+
++-----------+---------+----------------------+------+--------------+---------+----------+
+| Category  | Version | Description          | Type | Installed On | State   | Undoable |
++-----------+---------+----------------------+------+--------------+---------+----------+
+| Versioned | 1       | Create user table    | SQL  |              | Pending | No       |
+| Versioned | 2       | Add admin user       | SQL  |              | Pending | No       |
+| Versioned | 2.1     | Add some user        | SQL  |              | Pending | No       |
+| Versioned | 3       | Create profile table | SQL  |              | Pending | No       |
++-----------+---------+----------------------+------+--------------+---------+----------+
 ```
 
 #### 1.3.4 Baseline
@@ -91,8 +121,13 @@ flyway info
 ![flyway-baseline](../../images/workshop/flyway-baseline.png)
 
 ```shell
-./gradlew flywayBaseline
+FLYWAY_URL=jdbc:h2:file:~/test \
+FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway baseline
+
+Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
+Creating Schema History table "PUBLIC"."flyway_schema_history" with baseline ...
+Successfully baselined schema with version: 1
 ```
 
 #### 1.3.5 Clean
@@ -102,8 +137,18 @@ flyway baseline
 ![flyway-clean](../../images/workshop/flyway-clean.png)
 
 ```shell
-./gradlew flywayClean
-flyway -cleanDisabled="false" clean
+FLYWAY_URL=jdbc:h2:file:~/test \
+FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
+FLYWAY_CLEAN_DISABLED=false \
+flyway clean
+
+Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
+Successfully dropped pre-schema database level objects (execution time 00:00.000s)
+Successfully cleaned schema "PUBLIC" (execution time 00:00.002s)
+Successfully cleaned schema "PUBLIC" (execution time 00:00.000s)
+Successfully dropped post-schema database level objects (execution time 00:00.000s)
+
+또는 flyway -cleanDisabled="false" clean
 ```
 
 ### 1.4 How works Flyway
@@ -164,8 +209,91 @@ Spring Boot과 통합하기 위해 Gradle plugin이 준비되어 있다. 이를 
 
 #### 1.5.1 build.gradle
 
-```groovy
+```gradle 최소한의 설정
+dependencies {
+    implementation 'com.h2database:h2'                // db대용
+    implementation 'org.flywaydb:flyway-core'         // spring boot과의 통합을 위한 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    ...
+}
 ```
+
+이 상태에서 gradle :bootRun을 실행하면, flyway가 자동으로 실행되어 데이터베이스를 초기화하고, 마이그레이션을 적용한다.
+
+`org.flywaydb:flyway-core` 는 Spring boot과의 통합을 위해 필요하다.
+이를 위한 설정들은 spring-boot-autoconfigure 에 기본적으로 준비가 되어있다. 따라서 자세한 spring과의 연계설정은 `org.springframework.boot.autoconfigure.flyway.FlywayProperties` 를 참조해 커스텀 하는데 사용을 하면 좋다.
+개발 단계에서 로컬 설정을 공유하기 위해 application.properties 파일에 일부 설정을 한다.
+
+spring boot이 작동하며 flyway가 실행되는 구체적인 내용은 `Forg.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration Flyway flyway()` 빈을 통해 확인할 수 있다.
+
+아래 명령어를 통해 실행한다. 로그에 migration 이 되었는지 확인한다.
+
+```shell
+rm ~/test*.db   # 기존 데이터베이스 삭제
+./gradlew bootRun
+```
+
+결과
+
+```shell result
+2024-03-15T09:27:17.146+09:00  INFO 65279 --- [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:file:~/test (H2 2.2)
+2024-03-15T09:27:17.151+09:00  WARN 65279 --- [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.2.224 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.220.
+2024-03-15T09:27:17.160+09:00  INFO 65279 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
+2024-03-15T09:27:17.161+09:00  INFO 65279 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 4 migrations (execution time 00:00.006s)
+2024-03-15T09:27:17.164+09:00  INFO 65279 --- [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2024-03-15T09:27:17.175+09:00  INFO 65279 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": << Empty Schema >>
+2024-03-15T09:27:17.177+09:00  INFO 65279 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "1 - Create user table"
+2024-03-15T09:27:17.181+09:00  INFO 65279 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "2 - Add admin user"
+2024-03-15T09:27:17.185+09:00  INFO 65279 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "2.1 - Add some user"
+2024-03-15T09:27:17.188+09:00  INFO 65279 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "3 - Create profile table"
+2024-03-15T09:27:17.193+09:00  INFO 65279 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 4 migrations to schema "PUBLIC", now at version v3 (execution time 00:00.003s)
+2024-03-15T09:27:17.250+09:00  INFO 65279 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-03-15T09:27:17.255+09:00  INFO 65279 --- [           main] c.e.flyway.FlywayExampleApplication      : Started FlywayExampleApplication in 1.124 seconds (process running for 1.266)
+```
+
+`http://localhost:8080/h2` 에서 확인 후 아래 명령어를 통해 테이블을 삭제한다.
+
+```sql
+DROP TABLE IF EXISTS user_profiles;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS flyway_schema_history;
+```
+
+gradle task를 이용해 flyway를 실행할 수 있다. 이를 위해 의존성을 추가한다.
+
+```gradle
+plugins {
+    ...
+    id "org.flywaydb.flyway" version "10.0.0" // flyway plugin
+}
+flyway {
+    url = 'jdbc:h2:file:./target/flyway_db'
+    user = 'sa'
+}
+```
+
+그러면 gradle task에 flyway가 추가된다. 추가한 task를 확인한다.
+
+```shell 추가된 flyway task들을 확인한다.
+./gradlew tasks | grep flyway
+```
+
+#### 1.5.2 Add Versioned Migration
+
+새 마이그레이션 파일을 추가한다.
+
+```sql
+-- V4__Add_email_unique_constraint.sql
+ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);
+```
+
+이후 `./gradlew flywayInfo` 를 통해 예상되는 마이그레이션 결과를 확인한다.
+
+```shell
+./gradlew flywayInfo
+```
+
 
 
 ## 2. Integrate to CI
