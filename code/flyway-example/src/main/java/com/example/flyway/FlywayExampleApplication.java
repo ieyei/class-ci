@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FlywayExampleApplication {
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
         SpringApplication.run(FlywayExampleApplication.class, args);
     }
 
     @RequestMapping(value = "/")
     public String hello() {
-        return "Hello World!!!! from " + System.getenv("CI_ENVIRONMENT");
+        return "Hello World!!!!!!";
     }
 
 }
