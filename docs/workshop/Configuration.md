@@ -171,6 +171,8 @@ aws iam create-access-key --user-name github-action
 > `SecretAccessKey`, `AccessKeyId` 값은 최초 생성 할 때만 확인 가능.
 
 **AWS Credential 설정**  
+git fork
+
 Repository 상단 `Settings` 클릭 후 좌측 메뉴 `Secrets and variables > Actions` 클릭.  
 `New repository secret` 버튼을 클릭하여 앞서 저장한 IAM User `github-action`의 `SecretAccessKey`, `AccessKeyId` 값을 Secret에 저장.  
 
