@@ -23,6 +23,12 @@
 Environment secret 또는 variable 생성을 위해서는 `Environment` 가 필요.
 ![github env](../../images/workshop/github-env.png)
 
+등록 필요 variable
+```
+AWS_REGION : ap-northeast-2
+CI_ENVIRONMENT : github
+ECR_REPOSITORY : ci-sample
+```
 
 ### github action이 사용할 build.yaml 생성
 ![Get started with GitHub Actions](../../images/workshop/action-start.png)
