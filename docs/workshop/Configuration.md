@@ -172,6 +172,9 @@ aws iam create-access-key --user-name github-action
 
 **AWS Credential 설정**  
 git fork
+![git fork](../../images/workshop/fork1.png)
+
+![git fork detail](../../images/workshop/fork2.png)
 
 Repository 상단 `Settings` 클릭 후 좌측 메뉴 `Secrets and variables > Actions` 클릭.  
 `New repository secret` 버튼을 클릭하여 앞서 저장한 IAM User `github-action`의 `SecretAccessKey`, `AccessKeyId` 값을 Secret에 저장.  
