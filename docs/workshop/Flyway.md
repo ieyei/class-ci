@@ -18,6 +18,7 @@
         - [flyway\_schema\_history 예시](#flyway_schema_history-예시)
     - [1.5. Play With Gradle](#15-play-with-gradle)
       - [1.5.1 build.gradle](#151-buildgradle)
+      - [1.5.2 Add Versioned Migration](#152-add-versioned-migration)
   - [2. Integrate to CI](#2-integrate-to-ci)
 
 ## 1. Flyway CLI / Gradle
@@ -225,7 +226,7 @@ dependencies {
 이를 위한 설정들은 spring-boot-autoconfigure 에 기본적으로 준비가 되어있다. 따라서 자세한 spring과의 연계설정은 `org.springframework.boot.autoconfigure.flyway.FlywayProperties` 를 참조해 커스텀 하는데 사용을 하면 좋다.
 개발 단계에서 로컬 설정을 공유하기 위해 application.properties 파일에 일부 설정을 한다.
 
-spring boot이 작동하며 flyway가 실행되는 구체적인 내용은 `Forg.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration Flyway flyway()` 빈을 통해 확인할 수 있다.
+spring boot이 작동하며 flyway가 실행되는 구체적인 내용은 `org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration Flyway flyway()` 빈을 통해 확인할 수 있다.
 
 아래 명령어를 통해 실행한다. 로그에 migration 이 되었는지 확인한다.
 
@@ -293,8 +294,6 @@ ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);
 ```shell
 ./gradlew flywayInfo
 ```
-
-
 
 ## 2. Integrate to CI
 
