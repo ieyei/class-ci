@@ -29,12 +29,7 @@ export USERNAME="MY USERNAME"
 export EMAIL="MY EMAIL"
 ```
 
-```bash
-git config --global user.name ${USERNAME}
-git config --global user.email ${EMAIL}
-git config credential.helper store
-git config --global credential.helper 'cache --timeout 3600'
-```
+
 
 > [!NOTE]
 > github MFA 인증을 사용 하고 있는 경우, personal access token을 만들어 password로 사용.
@@ -176,6 +171,13 @@ aws iam create-access-key --user-name github-action
 > `SecretAccessKey`, `AccessKeyId` 값은 최초 생성 할 때만 확인 가능.
 
 **AWS Credential 설정**  
+git fork
+github: https://github.com/ieyei/class-ci
+
+![git fork](../../images/workshop/fork1.png)
+
+![git fork detail](../../images/workshop/fork2.png)
+
 Repository 상단 `Settings` 클릭 후 좌측 메뉴 `Secrets and variables > Actions` 클릭.  
 `New repository secret` 버튼을 클릭하여 앞서 저장한 IAM User `github-action`의 `SecretAccessKey`, `AccessKeyId` 값을 Secret에 저장.  
 

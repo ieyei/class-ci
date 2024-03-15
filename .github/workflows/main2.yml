@@ -1,46 +1,4 @@
-# Create CI pipeline
-
-## GitHub Action
-### GitHub Plans
-#### 개인 계정용 GitHub Free
-* GitHub Community Support
-* Dependabot alerts
-* 퍼블릭 리포지토리에 대한 배포 보호 규칙
-* 2단계 인증 적용
-* 500MB GitHub Packages 스토리지
-* 월 120 GitHub Codespaces 코어 시간
-* 월 15GB GitHub Codespaces 스토리지
-* GitHub Actions 기능
-  * 매월 2,000분
-  * 퍼블릭 리포지토리에 대한 배포 보호 규칙
-
-[GitHub의 Plan](https://docs.github.com/ko/get-started/learning-about-github/githubs-plans)
-
-### Github Actions secrets and variables
-우선 순위 : Environment > Repository > Organization
-![secret and variable](../../images/workshop/secret-variable.png)
-
-Environment secret 또는 variable 생성을 위해서는 `Environment` 가 필요.
-![github env](../../images/workshop/github-env.png)
-
-등록 필요 variable
-```
-AWS_REGION : ap-northeast-2
-CI_ENVIRONMENT : github
-ECR_REPOSITORY : ci-sample
-```
-
-### github action이 사용할 build.yaml 생성
-![Get started with GitHub Actions](../../images/workshop/action-start.png)
-
-`configure` 클릭하여 Simple workflow 보기 -> go back
-`set up a workflow yourself` 를 클릭하여 workflow 파일 작성
-
-순서: checkout -> build -> push
-
-**main-build.yaml**
-```
-name: Build-Main
+name: Build-Main2
 
 on:
   push:
@@ -131,18 +89,3 @@ jobs:
           IMAGE_TAG: ${{ steps.image-info.outputs.image_tag }}
         run: |
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:main-${{github.run_number}}  
-
-```
-
-
-### GitHub Action workflow 확인
-1. Code를 push하여 github action workflow 실행.
-```
-cd ~/environment/$GIT_REPO_NAME
-git add .
-git commit -m "Add github action build script"
-git push origin main
-```
-2. Browser에서 `run workflow` 버튼 클릭하여 실행.
-
-정상 build 확인 후 image가 ECR에 제대로 push 되었는지 확인.

@@ -92,7 +92,7 @@ Search - IAM - 좌측 Access management 영역 Roles 선택 - Create role 클릭
 AWS Cloud9의 경우, IAM credentials을 동적으로 관리 따라서 이 credentials을 비활성화 하고 조금 전 생성한 IAM role을 부여  
 
 1. AWS Cloud9 IDE 접속 - 우측 상단 기어 아이콘 클릭 
-2. Credentials 에서 AWS managed temporary credentials 비활성화
+2. 좌측 AWS Settings 메뉴선택 - 우측 Credentials 에서 AWS managed temporary credentials 비활성화
    ![create-role1](../../images/workshop/iam-role3.png)
 3. Temporary credentials이 없는지 확실히 하기 위해 기존의 자격 증명 파일도 제거
 ```bash
