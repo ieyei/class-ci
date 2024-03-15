@@ -63,6 +63,7 @@ FLYWAY_URL=jdbc:h2:file:~/test \
 FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway validate
 
+#결과
 Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
 Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
 ```
@@ -78,6 +79,7 @@ FLYWAY_URL=jdbc:h2:file:~/test \
 FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway migrate
 
+# 결과
 Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
 Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
 Successfully validated 4 migrations (execution time 00:00.006s)
@@ -101,6 +103,7 @@ FLYWAY_URL=jdbc:h2:file:~/test \
 FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway info
 
+#결과 
 Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
 Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
 Schema version: << Empty Schema >>
@@ -126,6 +129,7 @@ FLYWAY_URL=jdbc:h2:file:~/test \
 FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway baseline
 
+#결과
 Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
 Creating Schema History table "PUBLIC"."flyway_schema_history" with baseline ...
 Successfully baselined schema with version: 1
@@ -143,6 +147,7 @@ FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 FLYWAY_CLEAN_DISABLED=false \
 flyway clean
 
+#결과
 Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
 Successfully dropped pre-schema database level objects (execution time 00:00.000s)
 Successfully cleaned schema "PUBLIC" (execution time 00:00.002s)
