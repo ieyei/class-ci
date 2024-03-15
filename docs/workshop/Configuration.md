@@ -2,7 +2,7 @@
 
 ## ECR Repository 생성
 AWS CLI를 통해, 이미지 리포지토리를 생성.  
-repository name: msa-ref-biz-order  
+repository name: ci-sample  
 ```
 export ECR_REPOSITORY="ci-sample"
 export AWS_REGION="ap-northeast-2"
@@ -13,23 +13,23 @@ aws ecr create-repository \
 --region ${AWS_REGION}
 ```
 
-## GitHub 설정
-### Git Clone
-```bash
-git clone https://github.com/ieyei/class-ci.git
-cd class-ci/
+확인
+```basrh
+aws ecr describe-repositories
 ```
 
-
+## GitHub 설정
 ### Git 인증
 > [!NOTE]  
 > 만약 push 과정에서, username, password 를 매번 넣어야 하는 상황이 번거롭다면 아래와 같이 cache 설정을 통해 지정 된 시간(기본 15분) 동안 cache 기반으로 로그인 가능.
  
 username, email 내용을 본인에 맞게 변경
-```
+```bash
 export USERNAME="MY USERNAME"
 export EMAIL="MY EMAIL"
+```
 
+```bash
 git config --global user.name ${USERNAME}
 git config --global user.email ${EMAIL}
 git config credential.helper store
@@ -45,8 +45,13 @@ git config --global credential.helper 'cache --timeout 3600'
 **ssh key 생성**
 참고 URL: [Generating a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=mac#generating-a-new-ssh-key)  
 email 주소는 github 가입 시 사용한 주소로 변경
+> [!NOTE]
+> ssh-keygen 실행 시 물어보는 모든 것들은 입력 값 없이 `enter`
+```bash
+ssh-keygen -t rsa -b 4096 -C ${EMAIL}
 ```
-$ ssh-keygen -t rsa -b 4096 -C ${EMAIL}
+
+```
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/ec2-user/.ssh/id_rsa): 
 Enter passphrase (empty for no passphrase): 
@@ -88,8 +93,8 @@ SAMPLE-REPO="class-ci"
 > [!NOTE]
 > Are you sure you want to continue connecting (yes/no/[fingerprint])? --> 묻는 단계가 나올 경우 `yes`
 
-```
-$ git clone git@github.com:ieyei/class-ci.git
+```bash
+git clone https://github.com/ieyei/class-ci.git
 ```
 
 ### CI 파이프라인을 위한 AWS IAM 생성 및 policy 설정
