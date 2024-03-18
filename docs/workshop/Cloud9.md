@@ -1,4 +1,5 @@
 ## Cloud9 IDE 환경 구성
+`Lab Location`: :cloud:
 
 ### AWS Console 언어 설정
 AWS Console 은 언어 설정이 `Browser default` 이며 한글로 표시 되는 사람은 `English` 로 변경 필요.
