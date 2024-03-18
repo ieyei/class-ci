@@ -87,10 +87,13 @@ cat ~/.ssh/id_rsa.pub
 `Lab Location`: :octocat:
 
 1. github 페이지 우측 상단 profile 클릭
+    ![profile](../../images/workshop/profile.png)
 2. Settings 선택
+    ![settings](../../images/workshop/settings.png)
 3. Settings 상세페이지 좌측 Access > `SSH and GPG keys` 클릭
-4. ssh key 등록(Key 영역에 위에서 생성한 pub key 내용 붙여 넣기)
-![add ssh key](../../images/workshop/add-ssh-key.png)
+    ![ssh-gpg](../../images/workshop/ssh-gpg.png)
+4. `New SSH key` 클릭 > ssh key 등록(Key 영역에 위에서 생성한 `pub key` 내용 붙여 넣기)
+    ![add ssh key](../../images/workshop/add-ssh-key.png)
 
 
 ### Sample code git clone
