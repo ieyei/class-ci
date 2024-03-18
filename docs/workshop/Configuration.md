@@ -4,6 +4,8 @@
 ![workflow](../../images/workshop/workflow.png)
 4번 실습
 
+`Lab Location`: :cloud:
+
 AWS CLI를 통해, 이미지 리포지토리를 생성.  
 repository name: ci-sample  
 ```
@@ -162,7 +164,7 @@ aws iam attach-user-policy --user-name github-action --policy-arn arn:aws:iam::$
 
 gitHub action에서 사용할 AWS credential 생성 및 설정.
 
-**AWS Credential 생성**  
+#### AWS Credential 생성  
 앞 단계에서 생성한 IAM User의 Access Key, Secret Key 생성.
 ```
 aws iam create-access-key --user-name github-action
@@ -182,7 +184,7 @@ aws iam create-access-key --user-name github-action
 > [!NOTE]
 > `SecretAccessKey`, `AccessKeyId` 값은 최초 생성 할 때만 확인 가능.
 
-**AWS Credential 설정**  
+#### AWS Credential 설정
 git fork
 github: https://github.com/ieyei/class-ci
 
