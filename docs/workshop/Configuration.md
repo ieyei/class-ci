@@ -1,6 +1,9 @@
 # Prerequisites
 
 ## ECR Repository 생성
+![workflow](../../images/workshop/workflow.png)
+4번 실습
+
 AWS CLI를 통해, 이미지 리포지토리를 생성.  
 repository name: ci-sample  
 ```
@@ -20,6 +23,9 @@ aws ecr describe-repositories
 
 ## GitHub 설정
 ### Git 인증
+![workflow](../../images/workshop/workflow.png)
+5번 실습
+
 > [!NOTE]  
 > 만약 push 과정에서, username, password 를 매번 넣어야 하는 상황이 번거롭다면 아래와 같이 cache 설정을 통해 지정 된 시간(기본 15분) 동안 cache 기반으로 로그인 가능.
  
@@ -93,6 +99,9 @@ git clone https://github.com/ieyei/class-ci.git
 ```
 
 ### CI 파이프라인을 위한 AWS IAM 생성 및 policy 설정
+![workflow](../../images/workshop/workflow.png)
+6번 실습
+
 sample app을 빌드 하고, docker image로 만든 다음 ECR에 push 하는 과정은 `gitHub Action`을 통해 이루어지며 이 때 least privilege 정책에 따른 IAM User 생성.
 
 #### IAM User 생성
@@ -148,6 +157,9 @@ aws iam attach-user-policy --user-name github-action --policy-arn arn:aws:iam::$
 ```
 
 ### AWS Credential 생성 및 설정
+![workflow](../../images/workshop/workflow.png)
+7,8번 실습
+
 gitHub action에서 사용할 AWS credential 생성 및 설정.
 
 **AWS Credential 생성**  

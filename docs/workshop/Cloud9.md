@@ -1,8 +1,26 @@
 ## Cloud9 IDE 환경 구성
 
+### Default VPC 생성
+![workflow](../../images/workshop/workflow.png)
+0번 실습
+
+Region 이 Seoul 인지 확인
+`Search` 에서 `VPC` 로 검색
+Default VPC 가 없다면 생성
+(이미 생성되어 있는 VPC가 있다 하더라도 Default 가 아닌 경우 Default VPC 생성 필요)
+![default vpc](../../images/workshop/default-vpc.png)
+
+`Create default VPC` 클릭
+![default vpc](../../images/workshop/default-vpc2.png)
+
+Default VPC Detail
+![default vpc](../../images/workshop/default-vpc-detail.png)
 
 ### Cloud9 IDE 생성
-Seoul region 확인 후 AWS 서비스에서 Cloud9을 선택하고, "Create Environments" 버튼을 클릭한다.  
+![workflow](../../images/workshop/workflow.png)
+1번 실습
+
+`Seoul region` 확인 후 AWS 서비스에서 Cloud9을 선택하고, "Create Environments" 버튼을 클릭한다.  
 ![cloud9-create](../../images/workshop/cloud9-create.png)
 
 Cloud9 이름과 Descriiption을 설정한다. 
@@ -22,6 +40,8 @@ AWS Console에서 Cloud9 생성 확인
 ![cloud9-list](../../images/workshop/cloud9-list.png)
 
 ### Cloud9 storage 증설
+![workflow](../../images/workshop/workflow.png)
+2번 실습
 
 Cloud9 세부 페이지 - `Manage EC2 instance` 클릭
 ![cloud9-detail](../../images/workshop/cloud9-detail.png)
@@ -56,6 +76,9 @@ ex4 파일 시스템 확장
 df -h
 sudo resize2fs /dev/nvme0n1p1
 ```
+> [!NOTE]
+> resize2fs 시 에러는 무시
+
 
 ```bash
 sudo reboot -f
@@ -66,6 +89,9 @@ sudo reboot -f
 ![iam-role](../../images/workshop/iam_role.png)
 
 ### Cloud9 IAM Role 생성 및 변경
+![workflow](../../images/workshop/workflow.png)
+3번 실습
+
 Administrator access 정책을 가진 IAM Role을 생성하여 AWS Cloud9에 할당.
 > [!NOTE]
 > 본 실습의 경우, AdministratorAccess 정책을 사용하지만 실제 프로덕션 환경을 구동할 때에는 최소 권한을 부여하는 것이 적합.
@@ -195,3 +221,5 @@ brew install helm
 ```
 helm version
 ```
+
+[Next - Configuration](./Configuration.md)
