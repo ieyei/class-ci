@@ -1,5 +1,10 @@
 ## Cloud9 IDE 환경 구성
 
+### AWS Console 언어 설정
+AWS Console 은 언어 설정이 `Browser default` 이며 한글로 표시 되는 사람은 `English` 로 변경 필요.
+
+![console language](../../images/workshop/console-lang.png)
+
 ### Default VPC 생성
 ![workflow](../../images/workshop/workflow.png)
 0번 실습
