@@ -50,31 +50,15 @@ flyway -v
 - [Flyway CLI and API - Commnads](https://documentation.red-gate.com/fd/commands-184127446.html)
 - [Flyway with Gradle](https://documentation.red-gate.com/fd/quickstart-gradle-184127577.html)
 
-#### 1.3.1 Validate
-
-마이그레이션 스크립트와 데이터베이스의 현재 상태를 비교하여 일치하는지 확인하는 과정이다. 불일치를 찾아내서 실수나 오류가 발생하기 전에 미리 알려준다.
-
-특히, 각 파일은 checksum을 통해 고유성을 보장하므로 변경을 감지할 수 있다.
-
-![flyway-validate](../../images/workshop/flyway-validate.png)
-
-```shell
-FLYWAY_URL=jdbc:h2:file:~/test \
-FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
-flyway validate
-
-#결과
-Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
-Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
-```
-
-#### 1.3.2 Migrate
+#### 1.3.1 Migrate
 
 데이터베이스에 반영하는 과정이다. 순차적으로 실행하며, 이 버전은 메타테이블(flyway_schema_history)에 기록된다.
 
 ![flyway-migrate](../../images/workshop/flyway-migrate.png)
 
 ```shell
+cd code/flyway-example
+
 FLYWAY_URL=jdbc:h2:file:~/test \
 FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway migrate
@@ -92,6 +76,25 @@ Migrating schema "PUBLIC" to version "3 - Create profile table"
 Successfully applied 4 migrations to schema "PUBLIC", now at version v3 (execution time 00:00.003s)
 ```
 
+#### 1.3.2 Validate
+
+마이그레이션 스크립트와 데이터베이스의 현재 상태를 비교하여 일치하는지 확인하는 과정이다. 불일치를 찾아내서 실수나 오류가 발생하기 전에 미리 알려준다.
+
+특히, 각 파일은 checksum을 통해 고유성을 보장하므로 변경을 감지할 수 있다.
+
+![flyway-validate](../../images/workshop/flyway-validate.png)
+
+```shell
+FLYWAY_URL=jdbc:h2:file:~/test \
+FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
+flyway validate
+
+#결과
+Database: jdbc:h2:file:/Users/ieyei/test (H2 2.2)
+Successfully validated 4 migrations (execution time 00:00.014s)
+```
+
+
 #### 1.3.3 Info
 
 현재 데이터베이스의 마이그레이션 상태에 대한 상세한 정보를 제공한다. 적용된 것과 적용될 것을 비교하여 나타내며 실패한 마이그레이션은 해당 정보를 표현해준다.
@@ -104,18 +107,17 @@ FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
 flyway info
 
 #결과 
-Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
-Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
-Schema version: << Empty Schema >>
+Database: jdbc:h2:file:/Users/ieyei/test (H2 2.2)
+Schema version: 3
 
-+-----------+---------+----------------------+------+--------------+---------+----------+
-| Category  | Version | Description          | Type | Installed On | State   | Undoable |
-+-----------+---------+----------------------+------+--------------+---------+----------+
-| Versioned | 1       | Create user table    | SQL  |              | Pending | No       |
-| Versioned | 2       | Add admin user       | SQL  |              | Pending | No       |
-| Versioned | 2.1     | Add some user        | SQL  |              | Pending | No       |
-| Versioned | 3       | Create profile table | SQL  |              | Pending | No       |
-+-----------+---------+----------------------+------+--------------+---------+----------+
++-----------+---------+----------------------+------+---------------------+---------+----------+
+| Category  | Version | Description          | Type | Installed On        | State   | Undoable |
++-----------+---------+----------------------+------+---------------------+---------+----------+
+| Versioned | 1       | Create user table    | SQL  | 2024-03-20 21:08:32 | Success | No       |
+| Versioned | 2       | Add admin user       | SQL  | 2024-03-20 21:08:32 | Success | No       |
+| Versioned | 2.1     | Add some user        | SQL  | 2024-03-20 21:08:32 | Success | No       |
+| Versioned | 3       | Create profile table | SQL  | 2024-03-20 21:08:32 | Success | No       |
++-----------+---------+----------------------+------+---------------------+---------+----------+
 ```
 
 #### 1.3.4 Baseline
