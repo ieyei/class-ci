@@ -96,16 +96,6 @@ cat ~/.ssh/id_rsa.pub
     ![add ssh key](../../images/workshop/add-ssh-key.png)
 
 
-### Sample code git clone
-실습을 위해 sample code `git clone`을 한다.  
-Terminal에서 git clone   
-SAMPLE-REPO="class-ci"
-> [!NOTE]
-> Are you sure you want to continue connecting (yes/no/[fingerprint])? --> 묻는 단계가 나올 경우 `yes`
-
-```bash
-git clone https://github.com/ieyei/class-ci.git
-```
 
 ### CI 파이프라인을 위한 AWS IAM 생성 및 policy 설정
 ![workflow](../../images/workshop/workflow.png)
@@ -219,3 +209,17 @@ Secret: SecretAccessKey 의 값
 
 등록 후 화면
 ![actions secret registration](../../images/workshop/action-secret2.png)
+
+### Sample code git clone
+`Lab Location`: :cloud:
+
+실습을 위해 sample code `git clone`을 한다.  
+Terminal에서 git clone   
+SAMPLE-REPO="class-ci"
+> [!NOTE]
+> Are you sure you want to continue connecting (yes/no/[fingerprint])? --> 묻는 단계가 나올 경우 `yes`
+
+GitHub 본인 계정으로 fork 후 그 repostitory 를 클론한다.
+```bash
+git clone https://github.com/{username}/class-ci.git
+```
