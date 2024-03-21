@@ -51,9 +51,9 @@ AWS Console에서 Cloud9 생성 확인
 
 Cloud9 세부 페이지 - `Manage EC2 instance` 클릭
 ![cloud9-detail](../../images/workshop/cloud9-detail.png)
-Block devices - Volume ID 클릭
+해당 인스턴스 check - 아래 상세 정보 Storage Tab - Block devices - Volume ID 클릭
 ![ec2-storage1](../../images/workshop/ec2-storage1.png)
-check - Actions - Modify volume
+해당 Volume check - Actions - Modify volume
 ![modify-volume](../../images/workshop/modify-volume1.png)
 Size 30 으로 변경
 ![modify-volume2](../../images/workshop/modify-volume2.png)
@@ -77,15 +77,7 @@ nvme0n1       259:0    0  30G  0 disk
 └─nvme0n1p128 259:3    0  10M  0 part /boot/efi
 ```
 
-ex4 파일 시스템 확장
-```bash
-df -h
-sudo resize2fs /dev/nvme0n1p1
-```
-> [!NOTE]
-> resize2fs 시 에러는 무시
-
-
+EC2 reboot
 ```bash
 sudo reboot -f
 ```
@@ -103,11 +95,12 @@ Administrator access 정책을 가진 IAM Role을 생성하여 AWS Cloud9에 할
 > 본 실습의 경우, AdministratorAccess 정책을 사용하지만 실제 프로덕션 환경을 구동할 때에는 최소 권한을 부여하는 것이 적합.
 
 #### Role 생성
-1. AdministratorAccess 권한을 가진 role 생성
+1. AdministratorAccess 권한을 가진 role 생성:  
 Search - IAM - 좌측 Access management 영역 Roles 선택 - Create role 클릭
 ![create-role1](../../images/workshop/create-role0.png)
 
-2. Step 1 Select trusted entity:  Trusted entity type - AWS service, Use case - EC2 선택
+2. Step 1 Select trusted entity:  
+Trusted entity type - AWS service, Use case - EC2 선택
 ![create-role1](../../images/workshop/create-role1.png)
 3. Permissions policies 에서 `AdministratorAccess` 체크 후 Next
 4. Role name `cloud9-admin` 입력 후 Create role 버튼 클릭
@@ -121,7 +114,7 @@ Search - IAM - 좌측 Access management 영역 Roles 선택 - Create role 클릭
    ![create-role1](../../images/workshop/iam-role2.png)
 
 ### Cloud9에서 IAM 설정 업데이트
-AWS Cloud9의 경우, IAM credentials을 동적으로 관리 따라서 이 credentials을 비활성화 하고 조금 전 생성한 IAM role을 부여  
+AWS Cloud9의 경우, IAM credentials을 동적으로 관리 함,  따라서 이 credentials을 비활성화 하고 조금 전 생성한 IAM role을 부여  
 
 1. AWS Cloud9 IDE 접속 - 우측 상단 기어 아이콘 클릭 
 2. 좌측 AWS Settings 메뉴선택 - 우측 Credentials 에서 AWS managed temporary credentials 비활성화
@@ -185,6 +178,18 @@ source ~/.bashrc
 # kubectl 버전 확인
 kubectl version --client
 ```
+
+#### **kubeconfig 다운로드**
+
+> [! NOTE]
+> KUBECONFIG URL 은 별도로 전달.
+```bash
+export KUBECONFIG_URL="XXX"
+
+mkdir -p ~/.kube
+wget -O ~/.kube/config $KUBECONFIG_URL
+```
+
 
 #### **Homebrew 설치**
 Homebrew는 Apple(또는 Linux 시스템)에서 제공하지 않는 유용한 패키지 관리자를 설치.  
