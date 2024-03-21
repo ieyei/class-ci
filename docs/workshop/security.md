@@ -4,6 +4,8 @@
 
 ![trivy](../../images/class/trivy_logo.png)
 
+[CNCF LANDSCAPE](https://landscape.cncf.io/)
+
 Targets (what Trivy can scan):
 * Container Image
 * Filesystem
