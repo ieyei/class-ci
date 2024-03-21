@@ -210,13 +210,11 @@ Secret: SecretAccessKey 의 값
 ### Sample code git clone
 `Lab Location`: :cloud:
 
-실습을 위해 sample code `git clone`을 한다.  
-Terminal에서 git clone   
-SAMPLE-REPO="class-ci"
+실습을 위해 GitHub 본인 계정으로 fork 한 repostitory 를 `git clone` 한다.  
+
 > [!NOTE]
 > Are you sure you want to continue connecting (yes/no/[fingerprint])? --> 묻는 단계가 나올 경우 `yes`
 
-GitHub 본인 계정으로 fork 후 그 repostitory 를 클론한다.
 ```bash
 git clone https://github.com/{username}/class-ci.git
 ```
