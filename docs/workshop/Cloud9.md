@@ -11,7 +11,9 @@ AWS Console 은 언어 설정이 `Browser default` 이며 한글로 표시 되�
 0번 실습
 
 Region 이 Seoul 인지 확인
-`Search` 에서 `VPC` 로 검색
+
+`Search` 에서 `VPC` 로 검색 > [좌측의 Virtual private cloud - Your VPCs 선택](https://ap-northeast-2.console.aws.amazon.com/vpcconsole/home?region=ap-northeast-2#vpcs:)
+
 Default VPC 가 없다면 생성
 (이미 생성되어 있는 VPC가 있다 하더라도 Default 가 아닌 경우 Default VPC 생성 필요)
 ![default vpc](../../images/workshop/default-vpc.png)
