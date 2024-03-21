@@ -1,4 +1,4 @@
-# Prerequisites
+# Configuration
 
 ## ECR Repository 생성
 ![workflow](../../images/workshop/workflow.png)
@@ -19,7 +19,7 @@ aws ecr create-repository \
 ```
 
 확인
-```basrh
+```bash
 aws ecr describe-repositories
 ```
 
@@ -30,9 +30,6 @@ aws ecr describe-repositories
 
 `Lab Location`: :cloud:
 
-> [!NOTE]  
-> 만약 push 과정에서, username, password 를 매번 넣어야 하는 상황이 번거롭다면 아래와 같이 cache 설정을 통해 지정 된 시간(기본 15분) 동안 cache 기반으로 로그인 가능.
- 
 username, email 내용을 본인에 맞게 변경
 ```bash
 export USERNAME="MY USERNAME"
