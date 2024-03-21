@@ -215,7 +215,7 @@ Secret: SecretAccessKey 의 값
 > [!NOTE]
 > Are you sure you want to continue connecting (yes/no/[fingerprint])? --> 묻는 단계가 나올 경우 `yes`
 
-
+![git clone fork](../../images/workshop/git-clone-fork.png)
 
 ```bash
 git clone https://github.com/{username}/class-ci.git
