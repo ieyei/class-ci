@@ -24,7 +24,7 @@ Default VPC 가 없다면 생성
 Default VPC Detail
 ![default vpc](../../images/workshop/default-vpc-detail.png)
 
-**Record - VPC Creation**
+:coffee:    **Record - VPC Creation**
 ![Create VPC](../../images/workshop/creation-vpc.gif)
 
 ### Cloud9 IDE 생성
@@ -50,7 +50,7 @@ Instance type - Additional instance types - t3.large
 AWS Console에서 Cloud9 생성 확인
 ![cloud9-list](../../images/workshop/cloud9-list.png)
 
-**Record - Cloud9 Creation**
+:coffee:    **Record - Cloud9 Creation**
 ![Create VPC](../../images/workshop/create-cloud9.gif)
 
 ### Cloud9 storage 증설
@@ -66,7 +66,7 @@ Cloud9 세부 페이지 - `Manage EC2 instance` 클릭
 Size 30 으로 변경
 ![modify-volume2](../../images/workshop/modify-volume2.png)
 
-**Record - Modify EBS Volume**
+:coffee:    **Record - Modify EBS Volume**
 ![Create VPC](../../images/workshop/modify-volume-ebs.gif)
 
 "Open"을 눌러 Cloud9 IDE를 오픈합니다.
@@ -93,7 +93,7 @@ EC2 reboot
 sudo reboot -f
 ```
 
-**Record - Modify Linux partition**
+:coffee:    **Record - Modify Linux partition**
 ![Create VPC](../../images/workshop/modify-linux-partition.gif)
 
 ### AWS IAM Role
@@ -118,7 +118,7 @@ Trusted entity type - AWS service, Use case - EC2 선택
 3. Permissions policies 에서 `AdministratorAccess` 체크 후 Next
 4. Role name `cloud9-admin` 입력 후 Create role 버튼 클릭
 
-**Record - Create Admin role**
+:coffee:    **Record - Create Admin role**
 ![Create VPC](../../images/workshop/create-adminrole.gif)
 
 
@@ -163,7 +163,7 @@ echo "ACCOUNT_ID: " $ACCOUNT_ID
 echo "AWS_REGION: " $AWS_REGION
 ```
 
-**Record - Modify Cloud9 role**
+:coffee:    **Record - Modify Cloud9 role**
 ![Create VPC](../../images/workshop/modify-cloud9-role.gif)
 
 
@@ -256,7 +256,7 @@ brew install helm
 helm version
 ```
 
-**Record - Install Packages**
+:coffee:    **Record - Install Packages**
 ![Create VPC](../../images/workshop/install-package.svg)
 
 
