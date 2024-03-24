@@ -1,4 +1,4 @@
-# Cleanup
+# Cleanup - AWS Resources
 
 ## IAM
 ### Policy 삭제
@@ -9,8 +9,8 @@ aws iam list-policies --query 'Policies[?PolicyName==`ecr-policy`]'
 
 detach policy from user
 ```bash
-USERNAME="github-action"
-POLICY_NAME="ecr-policy"
+export USERNAME="github-action"
+export POLICY_NAME="ecr-policy"
 POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='$POLICY_NAME'].Arn" --output text)
 
 aws iam detach-user-policy --user-name $USERNAME --policy-arn $POLICY_ARN
@@ -38,11 +38,7 @@ aws iam delete-access-key --user-name $USERNAME --access-key-id $ACCESS_KEY_ID
 aws iam delete-user --user-name $USERNAME
 ```
 
-## GitHub SSH keys 삭제
-`Lab Location`: :octocat:
 
-경로: GitHub 페이지 - 우측 상단 profile - Settings - Settings 상세페이지 좌측 Access - `SSH and GPG keys`
-등록한 키 삭제
 
 ## ECR
 `Lab Location`: :cloud:
@@ -83,3 +79,16 @@ rm -rf ~/.kube
 ```
 
 ## Cloud9 삭제
+
+```bash
+for env_id in $(aws cloud9 list-environments --query 'environmentIds' --output text); do
+    aws cloud9 delete-environment --environment-id "$env_id" --force
+done
+```
+---
+# Cleanup - GibHub Resources
+## GitHub SSH keys 삭제
+`Lab Location`: :octocat:
+
+경로: GitHub 페이지 - 우측 상단 profile - Settings - Settings 상세페이지 좌측 Access - `SSH and GPG keys`
+등록한 키 삭제

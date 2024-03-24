@@ -24,6 +24,8 @@ Default VPC 가 없다면 생성
 Default VPC Detail
 ![default vpc](../../images/workshop/default-vpc-detail.png)
 
+![Create VPC](../../images/workshop/creation-vpc.gif)
+
 ### Cloud9 IDE 생성
 ![workflow](../../images/workshop/workflow.png)
 1번 실습
