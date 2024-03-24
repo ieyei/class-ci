@@ -38,8 +38,6 @@ aws iam delete-access-key --user-name $USERNAME --access-key-id $ACCESS_KEY_ID
 aws iam delete-user --user-name $USERNAME
 ```
 
-
-
 ## ECR
 `Lab Location`: :cloud:
 ECR Repository 삭제
