@@ -87,19 +87,10 @@ Flags:
   -v, --version                   show version
 
 ```
+:coffee:    **Record - Install trivy**
+![Install trivy](../../images/workshop/install-trivy.svg)
 
 
-### Use container image
-Pull Trivy image
-```
-docker pull aquasec/trivy:0.49.1
-```
-
-```
-docker run -v /var/run/docker.sock:/var/run/docker.sock \
-    aquasec/trivy:0.49.1 \
-    image python:3.4-alpine
-```
 ### Target - Container images
 Container image 안 파일들 중 스캔 가능한 항목
 * Vulnerabilities (enabled by default)
@@ -401,6 +392,11 @@ Total: 3 (UNKNOWN: 1, LOW: 2, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
 </details>
 
 
+
+:coffee:    **Record - Scan Image**
+![Scan Image](../../images/workshop/scan-image.svg)
+
+
 ### Target - Filesystem
 filesystem scan 을 위해서 git clone
 ```bash
@@ -462,6 +458,11 @@ Total: 4 (CRITICAL: 4)
 ```
 </details>
 
+
+:coffee:    **Record - Scan Filesystem**
+![Scan Filesystem](../../images/workshop/scan-files.svg)
+
+
 ### Target - Config
 trivy 는 내부에 Docker, Kubernetes, Terraform, CloudFormation 등과 같은 코드 파일 스캔 가능  
 
@@ -508,6 +509,9 @@ See https://avd.aquasec.com/misconfig/ds026
 ```
 </details>
 
+
+:coffee:    **Record - Scan Config**
+![Scan Config](../../images/workshop/scan-config.svg)
 
 ## trivy intellij 실습
 intellij 설정 창 오픈  

@@ -24,7 +24,7 @@ aws ecr describe-repositories
 ```
 
 :coffee:    **Record - Create ECR**
-![Create VPC](../../images/workshop/create-ecr.gif)
+![Create ECR](../../images/workshop/create-ecr.gif)
 
 
 ## GitHub 설정
@@ -97,7 +97,7 @@ cat ~/.ssh/id_rsa.pub
     ![add ssh key](../../images/workshop/add-ssh-key.png)
 
 :coffee:    **Record - Auth Git**
-![Create VPC](../../images/workshop/auth-git.gif)
+![Auth Git](../../images/workshop/auth-git.gif)
 
 ### CI 파이프라인을 위한 AWS IAM 생성 및 policy 설정
 ![workflow](../../images/workshop/workflow.png)
@@ -216,7 +216,7 @@ Secret: SecretAccessKey 의 값
 > [!NOTE]
 > 영상에는 git fork 부분 생략되어 있으며 실습 시 각 개인이 fork 필요(위 스크린샷 참조) 
 
-![Create VPC](../../images/workshop/iam-and-secret.gif)
+![Secret configuration](../../images/workshop/iam-and-secret.gif)
 
 
 ### Sample code git clone
@@ -232,3 +232,5 @@ Secret: SecretAccessKey 의 값
 ```bash
 git clone https://github.com/{username}/class-ci.git
 ```
+
+[Next - Security](./security.md)
