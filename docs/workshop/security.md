@@ -514,17 +514,25 @@ See https://avd.aquasec.com/misconfig/ds026
 ![Scan Config](../../images/workshop/scan-config.svg)
 
 ## trivy intellij 실습
-intellij 설정 창 오픈  
+### source git clone
+Intellij welcome 창 - `Get from VCS`
+![get-from-vcs](../../images/workshop/get-from-vcs.png)
+
+`git clone`  
+git clone address
+```bash
+https://github.com/aquasecurity/trivy-ci-test.git
+```
+![intellij-git-clone](../../images/workshop/intellij-git-clone.png)
+
+### Install trivy plugin
+intellij 설정 창 오픈
 - ⌘, (macOS) / Ctrl+Alt+S (Windows/Linux)
 
 intellij 설정 창에서 plugins 검색 -> Plugins 에서 trivy 검색 -> Install 클릭 -> OK 클릭
 ![intellij-settings](../../images/workshop/intellij-settings.png)
 
-local pc에서 git clone
-```bash
-git clone https://github.com/aquasecurity/trivy-ci-test.git
-```
-
+### Run trivy
 Projects Open: intellij - File - Open - trivy-ci-test 디렉토리 선택  
 좌측 윈도우에서 `Trivy Findings` Explorer 확인
 ![trivy findings](../../images/workshop/trivy-findings.png)
