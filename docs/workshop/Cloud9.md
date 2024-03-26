@@ -204,7 +204,7 @@ kubectl version --client
 
 #### **kubeconfig 다운로드**
 
-> [! NOTE]
+> [!NOTE]
 > KUBECONFIG URL 은 별도로 전달.
 ```bash
 export KUBECONFIG_URL="XXX"

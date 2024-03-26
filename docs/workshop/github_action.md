@@ -141,14 +141,39 @@ jobs:
 ```
 
 
+:coffee:    **Record - GitHub Action Build**
+![GitHub Action Build](../../images/workshop/githubaction-build.gif)
+
+:coffee:    **Record - ECR Image**  
+GitHub Action의 `run number` 통해 ECR의 Image `tag` 생성됨. 
+![ECR Image](../../images/workshop/ecr-image.gif)
+
+
+
 ### GitHub Action workflow 확인
-1. Code를 push하여 github action workflow 실행.
+1. Code를 push하여 github action workflow 실행.  
+`Lab Location`: :cloud:
+
+github config  
+이름, 이메일을 본인 정보로 변경하여 실행
+```bash
+git config --global user.name "Your Name"
+git config --global user.email you@example.com
 ```
-cd ~/environment/$GIT_REPO_NAME
+
+Code 수정 후 push & GitHub Action 확인
+```bash
+cd ~/environment/class-ci/
+echo "hello" >> ./code/flyway-example/README.md
+
 git add .
-git commit -m "Add github action build script"
+git commit -m "Modify README"
 git push origin main
 ```
+
+:coffee:    **Record - GitHub Action Auto Build**
+![GitHub Action Auto Build](../../images/workshop/github-action-workflow-auto.gif)
+
 2. Browser에서 `run workflow` 버튼 클릭하여 실행.
 
 정상 build 확인 후 image가 ECR에 제대로 push 되었는지 확인.

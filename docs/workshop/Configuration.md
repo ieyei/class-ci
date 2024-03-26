@@ -230,7 +230,26 @@ Secret: SecretAccessKey 의 값
 ![git clone fork](../../images/workshop/git-clone-fork.png)
 
 ```bash
-git clone https://github.com/{username}/class-ci.git
+git clone git@github.com:{username}/class-ci.git
+```
+
+실행 결과
+```bash
+mspmanager:~/environment $ git clone git@github.com:ieyei/class-ci.git
+Cloning into 'class-ci'...
+The authenticity of host 'github.com (20.200.245.247)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+remote: Enumerating objects: 761, done.
+remote: Counting objects: 100% (211/211), done.
+remote: Compressing objects: 100% (119/119), done.
+remote: Total 761 (delta 97), reused 193 (delta 87), pack-reused 550
+Receiving objects: 100% (761/761), 287.33 MiB | 11.01 MiB/s, done.
+Resolving deltas: 100% (253/253), done.
+Updating files: 100% (125/125), done.
+mspmanager:~/environment $ 
 ```
 
 [Next - Security](./security.md)
