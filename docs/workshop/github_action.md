@@ -17,6 +17,8 @@
 [GitHub의 Plan](https://docs.github.com/ko/get-started/learning-about-github/githubs-plans)
 
 ### Github Actions secrets and variables
+`Lab Location`: :octocat:
+
 우선 순위 : Environment > Repository > Organization
 ![secret and variable](../../images/workshop/secret-variable.png)
 
@@ -29,6 +31,10 @@ AWS_REGION : ap-northeast-2
 CI_ENVIRONMENT : github
 ECR_REPOSITORY : ci-sample
 ```
+
+:coffee:    **Record - Register ENV**
+![Register ENV](../../images/workshop/github-register-env.gif)
+
 
 ### github action이 사용할 build.yaml 생성
 ![Get started with GitHub Actions](../../images/workshop/action-start.png)
