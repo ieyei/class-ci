@@ -535,6 +535,9 @@ trivy severity 설정 - Critical, High
 Run Trivy
 ![trivy run](../../images/workshop/trivy-run.png)
 
+:coffee:    **Record - Trivy Intellij Lab**
+![Trivy Intellij Lab1](../../images/workshop/trivy-intellij1.gif)
+![Trivy Intellij Lab2](../../images/workshop/trivy-intellij2.gif)
 
 **CI와의 통합 사례**
 
@@ -548,3 +551,5 @@ Run Trivy
 **참조 프로세스**
 
 ![reference_jenkins_cicd](../../images/class/ref_jenkins_cicd.png)
+
+[Next - GitHub Action](./github_action.md)
