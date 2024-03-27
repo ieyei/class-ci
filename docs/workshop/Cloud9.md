@@ -67,7 +67,7 @@ Size 30 으로 변경
 ![modify-volume2](../../images/workshop/modify-volume2.png)
 
 :coffee:    **Record - Modify EBS Volume**
-![Create VPC](../../images/workshop/modify-volume-ebs.gif)
+![Modify EBS Volume](../../images/workshop/modify-volume-ebs.gif)
 
 "Open"을 눌러 Cloud9 IDE를 오픈합니다.
 ![cloud9-landing](../../images/workshop/cloud9-landing.png)
@@ -94,7 +94,7 @@ sudo reboot -f
 ```
 
 :coffee:    **Record - Modify Linux partition**
-![Create VPC](../../images/workshop/modify-linux-partition.gif)
+![Modify Linux partition](../../images/workshop/modify-linux-partition.gif)
 
 ### AWS IAM Role
 ![iam-role](../../images/workshop/iam_role.png)
@@ -119,7 +119,7 @@ Trusted entity type - AWS service, Use case - EC2 선택
 4. Role name `cloud9-admin` 입력 후 Create role 버튼 클릭
 
 :coffee:    **Record - Create Admin role**
-![Create VPC](../../images/workshop/create-adminrole.gif)
+![Create Admin role](../../images/workshop/create-adminrole.gif)
 
 
 
