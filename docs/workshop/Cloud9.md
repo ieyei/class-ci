@@ -164,7 +164,7 @@ echo "AWS_REGION: " $AWS_REGION
 ```
 
 :coffee:    **Record - Modify Cloud9 role**
-![Create VPC](../../images/workshop/modify-cloud9-role.gif)
+![Modify Cloud9 role](../../images/workshop/modify-cloud9-role.gif)
 
 
 
@@ -258,6 +258,7 @@ helm version
 
 :coffee:    **Record - Install Packages**
 ![Install Packages](../../images/record/install-package.gif)
+
 
 
 [Next - Configuration](./Configuration.md)
