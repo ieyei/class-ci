@@ -32,7 +32,7 @@ CI_ENVIRONMENT : github
 ECR_REPOSITORY : ci-sample
 ```
 
-:coffee:    **Record - Register ENV**
+:coffee:    **Record - Register ENV**  
 ![Register ENV](../../images/workshop/github-register-env.gif)
 
 
@@ -141,10 +141,10 @@ jobs:
 ```
 
 
-:coffee:    **Record - GitHub Action Build**
+:coffee:    **Record - GitHub Action Build**  
 ![GitHub Action Build](../../images/workshop/githubaction-build.gif)
 
-:coffee:    **Record - ECR Image**  
+:coffee:    **Record - ECR Image**    
 GitHub Action의 `run number` 통해 ECR의 Image `tag` 생성됨. 
 ![ECR Image](../../images/workshop/ecr-image.gif)
 
@@ -171,7 +171,7 @@ git commit -m "Modify README"
 git push origin main
 ```
 
-:coffee:    **Record - GitHub Action Auto Build**
+:coffee:    **Record - GitHub Action Auto Build**  s
 ![GitHub Action Auto Build](../../images/workshop/github-action-workflow-auto.gif)
 
 2. Browser에서 `run workflow` 버튼 클릭하여 실행.
