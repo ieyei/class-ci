@@ -257,7 +257,7 @@ helm version
 ```
 
 :coffee:    **Record - Install Packages**
-![Create VPC](../../images/workshop/install-package.svg)
+![Create VPC](../../images/record/install-package.gif)
 
 
 [Next - Configuration](./Configuration.md)
