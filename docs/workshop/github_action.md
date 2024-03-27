@@ -171,7 +171,7 @@ git commit -m "Modify README"
 git push origin main
 ```
 
-:coffee:    **Record - GitHub Action Auto Build**  s
+:coffee:    **Record - GitHub Action Auto Build**    
 ![GitHub Action Auto Build](../../images/workshop/github-action-workflow-auto.gif)
 
 2. Browser에서 `run workflow` 버튼 클릭하여 실행.
