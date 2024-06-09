@@ -54,35 +54,35 @@ email 주소는 github 가입 시 사용한 주소로 변경
 > [!NOTE]
 > ssh-keygen 실행 시 물어보는 모든 것들은 입력 값 없이 `enter`
 ```bash
-ssh-keygen -t rsa -b 4096 -C ${EMAIL}
+ssh-keygen -t ed25519 -C ${EMAIL}
 ```
 
 ```
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/ec2-user/.ssh/id_rsa): 
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/home/ec2-user/.ssh/id_ed25519): 
 Enter passphrase (empty for no passphrase): 
 Enter same passphrase again: 
-Your identification has been saved in /home/ec2-user/.ssh/id_rsa
-Your public key has been saved in /home/ec2-user/.ssh/id_rsa.pub
+Your identification has been saved in /home/ec2-user/.ssh/id_ed25519
+Your public key has been saved in /home/ec2-user/.ssh/id_ed25519.pub
 The key fingerprint is:
-SHA256:vHTZ6QOy+0iNVIFGq12RYtIEZZ0Z3vQCipP/xURq4SI your_email@example.com
+SHA256:6ZFe9alvUI2hDFFgio7BsiOrBWOlJU6FthyY65g+z5M gilseong.ryu@gmail.com
 The key's randomart image is:
-+---[RSA 4096]----+
-|      .*=o*=o    |
-|      .+*==X .   |
-|      E++.B + .  |
-|       B = = o   |
-|      . S + =    |
-|       o O +     |
-|        = o o    |
-|       . o   .   |
-|        o..      |
++--[ED25519 256]--+
+|....      ++.    |
+|o+..   . o.   .  |
+|o++oo . .  o.. + |
+|+o=o +   o .o.o..|
+|*=o . . S .  .o  |
+|+* .   o o  ..   |
+|o . .   o   ..   |
+|.+.E         ..  |
+|. oo.        ..  |
 +----[SHA256]-----+
 ```
 
 public key 복사
 ```
-cat ~/.ssh/id_rsa.pub
+cat ~/.ssh/id_ed25519.pub
 ```
 
 `Lab Location`: :octocat:
@@ -97,6 +97,10 @@ cat ~/.ssh/id_rsa.pub
     ![add ssh key](../../images/workshop/add-ssh-key.png)
 
 :coffee:    **Record - Auth Git**
+> [!NOTE]
+> 영상은 rsa 로 되어 있으나 위 예시처럼 `ed25519` 로 진행할 것.
+
+
 ![Auth Git](../../images/workshop/auth-git.gif)
 
 ### CI 파이프라인을 위한 AWS IAM 생성 및 policy 설정
