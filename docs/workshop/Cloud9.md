@@ -211,36 +211,7 @@ export KUBECONFIG_URL="XXX"
 
 mkdir -p ~/.kube
 wget -O ~/.kube/config $KUBECONFIG_URL
-```
-
-
-#### **Homebrew 설치**
-Homebrew는 Apple(또는 Linux 시스템)에서 제공하지 않는 유용한 패키지 관리자를 설치.  
-
-> [!NOTE]
-> homebrew설치할때 패스워드 묻기 때문에 미리 설정.
-
-ec2-user 패스워드 설정
-```
-sudo passwd ec2-user
-```
-
-homebrew 설치
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-brew 관련 설정을 profile에 추가합니다.
-```bash
-
-(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/ec2-user/.bash_profile
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-```
-
-설치 확인
-```
-brew -v
+chmod 600 ~/.kube/config
 ```
 
 #### **Helm 설치**
@@ -248,16 +219,15 @@ Helm은 쿠버네티스를 위한 패키지 관리 도구.
 
 설치 
 ```
-brew install helm
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
 ```
 
 설치 확인
 ```
 helm version
 ```
-
-:coffee:    **Record - Install Packages**
-![Install Packages](../../images/record/install-package.gif)
 
 
 
