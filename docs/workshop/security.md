@@ -401,6 +401,7 @@ Total: 3 (UNKNOWN: 1, LOW: 2, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
 ### Target - Filesystem
 filesystem scan 을 위해서 git clone
 ```bash
+cd ~/environment
 git clone https://github.com/aquasecurity/trivy-ci-test.git
 ```
 
