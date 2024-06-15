@@ -25,6 +25,8 @@
 Environment secret 또는 variable 생성을 위해서는 `Environment` 가 필요.
 ![github env](../../images/workshop/github-env.png)
 
+`ECR` Environment 생성 후 Environment variables추가  
+
 등록 필요 variable
 ```
 AWS_REGION : ap-northeast-2
