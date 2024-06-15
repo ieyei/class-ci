@@ -532,6 +532,18 @@ intellij 설정 창 오픈
 intellij 설정 창에서 plugins 검색 -> Plugins 에서 trivy 검색 -> Install 클릭 -> OK 클릭
 ![intellij-settings](../../images/workshop/intellij-settings.png)
 
+### (windows 사용자) trivy binary 설치
+
+Windows환경에서는 IntelliJ trivy플러그인을 통해 바이너리가 다운되지 않는 버그가 있다. 따라서 바이너리 파일을 직접 다운받아 설정한다.
+
+https://github.com/aquasecurity/trivy/releases/tag/v0.52.2 이동, [trivy_0.52.2_windows-64bit.zip](https://github.com/aquasecurity/trivy/releases/download/v0.52.2/trivy_0.52.2_windows-64bit.zip) 다운로드, 압축해제
+
+IntelliJ 설정 - path to Trivy  
+![trivy-windows-setting1.png](../../images/workshop/trivy-windows-setting1.png)
+
+Path to Trivy 설정을 trivy.exe 파일을 지정  
+![trivy-windows-setting2.png](../../images/workshop/trivy-windows-setting2.png)
+
 ### Run trivy
 Projects Open: intellij - File - Open - trivy-ci-test 디렉토리 선택  
 좌측 윈도우에서 `Trivy Findings` Explorer 확인
