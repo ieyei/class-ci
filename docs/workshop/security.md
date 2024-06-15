@@ -25,7 +25,8 @@ Scanners (what Trivy can find there):
 ### Install from GitHub Release (Official)
 
 ```
-curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin v0.49.1
+curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin v0.52.2
+
 ```
 
 trivy help 확인
@@ -400,6 +401,7 @@ Total: 3 (UNKNOWN: 1, LOW: 2, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
 ### Target - Filesystem
 filesystem scan 을 위해서 git clone
 ```bash
+cd ~/environment
 git clone https://github.com/aquasecurity/trivy-ci-test.git
 ```
 

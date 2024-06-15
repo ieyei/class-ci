@@ -22,11 +22,13 @@
 우선 순위 : Environment > Repository > Organization
 ![secret and variable](../../images/workshop/secret-variable.png)
 
-Environment secret 또는 variable 생성을 위해서는 `Environment` 가 필요.
+Environment secret 또는 variable 생성을 위해서는 `Environment` 가 필요.  
+`ECR` Environment 생성  
+Environments > `New environment` click > Name : ECR > `Configure environment` click  
 ![github env](../../images/workshop/github-env.png)
 
-`ECR` Environment 생성 후 Environment variables추가  
 
+Environment 생성 후 `Environment variable`에 아래 3가지 변수 등록   
 등록 필요 variable
 ```
 AWS_REGION : ap-northeast-2
