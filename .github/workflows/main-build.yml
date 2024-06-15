@@ -2,7 +2,7 @@ name: Build-Main
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
     paths:
       - 'code/flyway-example/**'
 
@@ -88,4 +88,4 @@ jobs:
           ECR_REPOSITORY: ${{ steps.image-info.outputs.ecr_repository }}
           IMAGE_TAG: ${{ steps.image-info.outputs.image_tag }}
         run: |
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:main-${{github.run_number}}  
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:main-${{github.run_number}}
