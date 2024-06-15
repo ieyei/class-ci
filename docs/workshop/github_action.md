@@ -144,6 +144,7 @@ jobs:
 
 ```
 
+main-build.yaml 생성 후 Actions > Build-Main > `Run workflow` click
 
 :coffee:    **Record - GitHub Action Build**  
 ![GitHub Action Build](../../images/workshop/githubaction-build.gif)
