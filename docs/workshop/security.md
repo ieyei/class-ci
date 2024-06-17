@@ -25,7 +25,7 @@ Scanners (what Trivy can find there):
 ### Install from GitHub Release (Official)
 
 ```
-curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin v0.52.2
+curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin latest
 
 ```
 
