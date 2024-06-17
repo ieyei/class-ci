@@ -543,7 +543,7 @@ https://github.com/aquasecurity/trivy/releases/tag/v0.52.2 이동, [trivy_0.52.2
 IntelliJ 설정 - path to Trivy  
 ![trivy-windows-setting1.png](../../images/workshop/trivy-windows-setting1.png)
 
-Path to Trivy 설정을 trivy.exe 파일을 지정  
+Path to Trivy 설정을 trivy.exe 파일로 지정  
 ![trivy-windows-setting2.png](../../images/workshop/trivy-windows-setting2.png)
 
 ### Run trivy
