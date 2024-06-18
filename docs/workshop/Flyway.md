@@ -168,8 +168,7 @@ Successfully validated 4 migrations (execution time 00:00.014s)
 ![flyway-clean](../../images/workshop/flyway-clean.png)
 
 ```shell
-./gradlew flywayClean -Pflyway.cleanDisabled="false" 
-./gradlew flywayInfo 
+./gradlew flywayClean flywayInfo  -Pflyway.cleanDisabled="false"  
 ```
 
 ```shell
