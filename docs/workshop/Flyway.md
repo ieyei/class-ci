@@ -71,7 +71,6 @@ echo https://$C9_PID.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/h2
 ![flyway-info](../../images/workshop/flyway-info.png)
 
 ```shell
-#결과
 ./gradlew flywayInfo
 
 ```
