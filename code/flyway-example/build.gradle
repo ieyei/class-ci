@@ -26,9 +26,7 @@ dependencies {
 }
 
 flyway {
-    //url = 'jdbc:h2:file:~/test'
-    def projectDirPath = project.hasProperty('projectDir') ? project.property('projectDir') : "$projectDir"
-    url = 'jdbc:h2:file:' + projectDirPath + '/test'
+    url = 'jdbc:h2:file:/home/ec2-user/environment/class-ci/code/flyway-example/test'
     user = 'sa'
     //password = ''
     //schemas = ['PUBLIC']
