@@ -43,8 +43,10 @@ group = 'flyway_example'
 version = '0.0.1-SNAPSHOT'
 description = 'flyway_example'
 
-java.sourceCompatibility = JavaVersion.VERSION_17
-java.targetCompatibility = JavaVersion.VERSION_17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 publishing {
     publications {
