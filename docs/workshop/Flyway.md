@@ -1,25 +1,26 @@
 
 # Flyway
 
-- [Flyway](#flyway)
-  - [1. Flyway CLI / Gradle](#1-flyway-cli--gradle)
-    - [1.1 Flyway란?](#11-flyway란)
-    - [1.2 Play with CLI](#12-play-with-cli)
-      - [1.2.1 Install](#121-install)
-    - [1.2.2 Verify Installation](#122-verify-installation)
-    - [1.3 How to use Flyway](#13-how-to-use-flyway)
-      - [1.3.1 Validate](#131-validate)
-      - [1.3.2 Migrate](#132-migrate)
-      - [1.3.3 Info](#133-info)
-      - [1.3.4 Baseline](#134-baseline)
-      - [1.3.5 Clean](#135-clean)
-    - [1.4 How works Flyway](#14-how-works-flyway)
-      - [1.4.1 flyway\_schema\_history Table](#141-flyway_schema_history-table)
-        - [flyway\_schema\_history 예시](#flyway_schema_history-예시)
-    - [1.5. Play With Gradle](#15-play-with-gradle)
-      - [1.5.1 build.gradle](#151-buildgradle)
-      - [1.5.2 Add Versioned Migration](#152-add-versioned-migration)
-  - [2. Integrate to CI](#2-integrate-to-ci)
+Flyway는 데이터베이스 마이그레이션 도구이다. 이 문서에서는 Flyway를 사용하는 방법과 CI/CD에서의 활용을 다룬다.
+
+## Table of Contents
+
+- [1. Flyway CLI / Gradle](#1-flyway-cli--gradle)
+  - [1.1 Flyway란?](#11-flyway란)
+  - [1.2 How to use Flyway](#12-how-to-use-flyway)
+    - [1.2.1 Info](#121-info)
+    - [1.2.2 Migrate](#122-migrate)
+    - [1.2.3 Validate](#123-validate)
+    - [1.2.4 Baseline](#124-baseline)
+    - [1.2.5 Clean](#135-clean)
+  - [1.3 How works Flyway(이론)](#14-how-works-flyway)
+    - [1.3.1 flyway_schema_history Table](#141-flyway_schema_history-table)
+  - [1.4. Play With Gradle](#15-play-with-gradle)
+    - [1.4.1 build.gradle](#151-buildgradle)
+    - [1.4.2 Add Versioned Migration](#152-add-versioned-migration)
+- [2. Integrate to CI/CD](#2-integrate-to-cicd)
+  - [2.1 Validate @ CI](#21-validate--ci)
+  - [2.2 migrate @ CD](#22-migrate--cd)
 
 ## 1. Flyway CLI / Gradle
 
@@ -36,25 +37,35 @@ Flyway: 데이터베이스 마이그레이션 도구
 - [Flyway CLI and API - Commnads](https://documentation.red-gate.com/fd/commands-184127446.html)
 - [Flyway with Gradle](https://documentation.red-gate.com/fd/quickstart-gradle-184127577.html)
 
+** 실습은 아래 경로에서 진행한다**
+```
+cd code/flyway-example
+```
+
+`-PprojectDir=$PWD` 를 통해 현재 디렉토리에 sqlite db를 생성해 실행한다. 잘못된 경우, database를 없애고 싶다면 test.mv.db 파일을 삭제하면 된다.
+
+
 #### 1.2.1 Info
 
 현재 데이터베이스의 마이그레이션 상태에 대한 상세한 정보를 제공한다. 적용된 것과 적용될 것을 비교하여 나타내며 실패한 마이그레이션은 해당 정보를 표현해준다.
 
+
 ![flyway-info](../../images/workshop/flyway-info.png)
 
 ```shell
-#결과 
-Database: jdbc:h2:file:/Users/ieyei/test (H2 2.2)
-Schema version: 3
+#결과
+./gradlew flywayInfo -PprojectDir=$PWD
 
-+-----------+---------+----------------------+------+---------------------+---------+----------+
-| Category  | Version | Description          | Type | Installed On        | State   | Undoable |
-+-----------+---------+----------------------+------+---------------------+---------+----------+
-| Versioned | 1       | Create user table    | SQL  | 2024-03-20 21:08:32 | Success | No       |
-| Versioned | 2       | Add admin user       | SQL  | 2024-03-20 21:08:32 | Success | No       |
-| Versioned | 2.1     | Add some user        | SQL  | 2024-03-20 21:08:32 | Success | No       |
-| Versioned | 3       | Create profile table | SQL  | 2024-03-20 21:08:32 | Success | No       |
-+-----------+---------+----------------------+------+---------------------+---------+----------+
+> Task :flywayInfo
+Schema version: << Empty Schema >>
++-----------+---------+----------------------+------+--------------+---------+----------+
+| Category  | Version | Description          | Type | Installed On | State   | Undoable |
++-----------+---------+----------------------+------+--------------+---------+----------+
+| Versioned | 1       | Create user table    | SQL  |              | Pending | No       |
+| Versioned | 2       | Add admin user       | SQL  |              | Pending | No       |
+| Versioned | 2.1     | Add some user        | SQL  |              | Pending | No       |
+| Versioned | 3       | Create profile table | SQL  |              | Pending | No       |
++-----------+---------+----------------------+------+--------------+---------+----------+
 ```
 
 #### 1.2.2 Migrate
@@ -64,23 +75,13 @@ Schema version: 3
 ![flyway-migrate](../../images/workshop/flyway-migrate.png)
 
 ```shell
-cd code/flyway-example
-
-FLYWAY_URL=jdbc:h2:file:~/test \
-FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
-flyway migrate
+./gradlew flywayMigrate -PprojectDir=$PWD
 
 # 결과
-Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
-Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
-Successfully validated 4 migrations (execution time 00:00.006s)
-Creating Schema History table "PUBLIC"."flyway_schema_history" ...
-Current version of schema "PUBLIC": << Empty Schema >>
-Migrating schema "PUBLIC" to version "1 - Create user table"
-Migrating schema "PUBLIC" to version "2 - Add admin user"
-Migrating schema "PUBLIC" to version "2.1 - Add some user"
-Migrating schema "PUBLIC" to version "3 - Create profile table"
-Successfully applied 4 migrations to schema "PUBLIC", now at version v3 (execution time 00:00.003s)
+BUILD SUCCESSFUL in 696ms
+1 actionable task: 1 executed
+
+
 ```
 
 #### 1.2.3 Validate
@@ -92,55 +93,61 @@ Successfully applied 4 migrations to schema "PUBLIC", now at version v3 (executi
 ![flyway-validate](../../images/workshop/flyway-validate.png)
 
 ```shell
-FLYWAY_URL=jdbc:h2:file:~/test \
-FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
-flyway validate
+./gradlew flywayValidate -PprojectDir=$PWD
 
 #결과
 Database: jdbc:h2:file:/Users/ieyei/test (H2 2.2)
 Successfully validated 4 migrations (execution time 00:00.014s)
 ```
 
-#### 1.2.4 Baseline
-
-기존에 있던 데이터베이스에 flyway를 도입할 때 사용한다.
-
-![flyway-baseline](../../images/workshop/flyway-baseline.png)
-
-```shell
-FLYWAY_URL=jdbc:h2:file:~/test \
-FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
-flyway baseline
-
-#결과
-Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
-Creating Schema History table "PUBLIC"."flyway_schema_history" with baseline ...
-Successfully baselined schema with version: 1
-```
-
-#### 1.3.5 Clean
+#### 1.2.4 Clean
 
 데이터베이스 내의 모든 스키마, 테이블, 뷰, 저장 프로시저, 함수, 트리거 등을 삭제하여 데이터베이스를 초기 상태로 되돌리는 기능이다. 운영에서 사용하면 안되기 때문에 나름의 안전장치가 포함되어있다.
 
 ![flyway-clean](../../images/workshop/flyway-clean.png)
 
 ```shell
-FLYWAY_URL=jdbc:h2:file:~/test \
-FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
-FLYWAY_CLEAN_DISABLED=false \
-flyway clean
+./gradlew flywayClean -Pflyway.cleanDisabled="false" -PprojectDir=$PWD
+./gradlew flywayInfo -PprojectDir=$PWD
 
-#결과
-Database: jdbc:h2:file:/Users/neal/test (H2 2.2)
-Successfully dropped pre-schema database level objects (execution time 00:00.000s)
-Successfully cleaned schema "PUBLIC" (execution time 00:00.002s)
-Successfully cleaned schema "PUBLIC" (execution time 00:00.000s)
-Successfully dropped post-schema database level objects (execution time 00:00.000s)
 
-또는 flyway -cleanDisabled="false" clean
+#결과: 모두 지워져 State 가 Pending으로 되돌아간다.
++-----------+---------+----------------------+------+--------------+---------+----------+
+| Category  | Version | Description          | Type | Installed On | State   | Undoable |
++-----------+---------+----------------------+------+--------------+---------+----------+
+| Versioned | 1       | Create user table    | SQL  |              | Pending | No       |
+| Versioned | 2       | Add admin user       | SQL  |              | Pending | No       |
+| Versioned | 2.1     | Add some user        | SQL  |              | Pending | No       |
+| Versioned | 3       | Create profile table | SQL  |              | Pending | No       |
++-----------+---------+----------------------+------+--------------+---------+----------+
 ```
 
-### 1.4 How works Flyway
+
+#### 1.2.5 Baseline
+
+기존에 있던 데이터베이스에 flyway를 도입할 때 사용한다.
+
+![flyway-baseline](../../images/workshop/flyway-baseline.png)
+
+```shell
+# baseline과 info를 실행한다.
+./gradlew flywayBaseline flywayInfo -PprojectDir=$PWD -Pflyway.baselineVersion=0.1 -Pflyway.baselineDescription="init schema"
+
+#결과
+> Task :flywayInfo
+Schema version: 0.1
++-----------+---------+----------------------+----------+---------------------+----------+----------+
+| Category  | Version | Description          | Type     | Installed On        | State    | Undoable |
++-----------+---------+----------------------+----------+---------------------+----------+----------+
+|           | 0.1     | init schema          | BASELINE | 2024-06-18 13:20:59 | Baseline | No       |
+| Versioned | 1       | Create user table    | SQL      |                     | Pending  | No       |
+| Versioned | 2       | Add admin user       | SQL      |                     | Pending  | No       |
+| Versioned | 2.1     | Add some user        | SQL      |                     | Pending  | No       |
+| Versioned | 3       | Create profile table | SQL      |                     | Pending  | No       |
++-----------+---------+----------------------+----------+---------------------+----------+----------+
+```
+
+### 1.4 How works Flyway (이론)
 
 1. flyway_schema_history Table을 찾는다.
 
@@ -172,7 +179,7 @@ Successfully dropped post-schema database level objects (execution time 00:00.00
 
 #### 1.4.1 flyway_schema_history Table
 
-flyway_schema_history 테이블은 Flyway가 데이터베이스 마이그레이션을 관리하는 데 사용하는 중요한 메타데이터 테이블이다.
+flyway_schema_history 테이블은 Flyway가 데이터베이스 마이그레이션을 관리하는데 사용하는 중요한 메타데이터 테이블이다.
 
 이 테이블에는 실행된 마이그레이션 스크립트의 이력이 저장되며, Flyway는 이 정보를 사용하여 데이터베이스의 현재 스키마 버전을 파악하고, 어떤 마이그레이션 스크립트가 이미 적용되었는지, 어떤 스크립트가 아직 적용되지 않았는지 등을 결정한다.
 
@@ -192,11 +199,11 @@ flyway_schema_history 테이블은 Flyway가 데이터베이스 마이그레이�
 | 4 | 0.4 | ALTER XX TABLES RENAME FINAL UPDATE TIMESTAMP | SQL | V0_4__ALTER_XX_TABLES_RENAME_FINAL_UPDATE_TIMESTAMP.sql | -1577194743 | flyway | 20:53.2 | 243 | TRUE |
 | 5 | 0.5 | ALTER table setting batch schedule main | SQL | V0_5__ALTER_table_setting_batch_schedule_main.sql | -1239577890 | flyway | 13:23.3 | 91  | TRUE |
 
-### 1.5. Play With Gradle
+### 1.4. Play With Gradle
 
 Spring Boot과 통합하기 위해 Gradle plugin이 준비되어 있다. 이를 통해 빌드 스크립트에 마이그레이션을 쉽게 추가할 수 있으며, 쉽게 빌드 프로세스에 통합할 수 있다.
 
-#### 1.5.1 build.gradle
+#### 1.4.1 build.gradle
 
 ```gradle 최소한의 설정
 dependencies {
@@ -268,7 +275,7 @@ flyway {
 ./gradlew tasks | grep flyway
 ```
 
-#### 1.5.2 Add Versioned Migration
+#### 1.4.2 Add Versioned Migration
 
 새 마이그레이션 파일을 추가한다.
 
@@ -289,8 +296,9 @@ CI에서 Flyway Script의 검증과 예상되는 결과에 대한 리뷰 과정�
 
 ### 2.1 Validate @ CI
 
-CI환경에서 여태까지의 flyway script들이 변경되지 않았는지 검증이 필요하다. 다양한 사람들의 수많은 PR을 검증하다보면, 설계가 변경되고 컬럼이 수정되는 여러 상황들을 피해야 한다.
-이런 환경들을 각 계 별로 견고하게 유지하고 싶다면, Validate하는 과정이 필요하다.
+CI환경에서 여태까지의 flyway script들이 변경되지 않았는지 검증이 필요하다. 
+다양한 사람들의 수많은 PR을 검증하다보면, 설계가 변경되고 컬럼이 수정되는 여러 상황들을 피해야 한다.
+이런 환경들을 각 계 별로 견고하게 유지하고 싶다면, DB의 형상변경을 PR리뷰를 통해 각 commit을 검증하고, CI pipeline을 통해 Validate하는 과정이 필요하다.
 
 Validate는 현재의 flyway script들과 배포되어 있는 상황을 비교하는 작업이다. 따라서 *신규 버전이 올라가는 경우* 해당 내용은 데이터베이스에 반영되지 않은 내용이므로 fail이 된다.
 
@@ -313,6 +321,7 @@ Execution failed for task ':flywayValidate'.
 현재 시점의 Info를 보면 Pending 이라고 표현되어 Validate 단계에서는 차이가 발견되어 실패함을 알 수 있다.
 
 ```text
+# DB에 반영되지 않은 버전은 Pending 상태인 것을 알 수 있다.
 +-----------+---------+----------------------+------+--------------+---------+----------+
 | Category  | Version | Description          | Type | Installed On | State   | Undoable |
 +-----------+---------+----------------------+------+--------------+---------+----------+
@@ -324,6 +333,15 @@ Execution failed for task ':flywayValidate'.
 CI에서는 migrate 전 데이터베이스의 견고함을 확인하기 위함이므로 `-ignoreMigrationPatterns='*:pending'` 를 추가해 신규 버전의 스키마를 제외한 나머지를 검증하도록 한다.
 
 
-2.2 migrate @ CD
+### 2.2 migrate @ CD
 
 flyway와 gradle의 통합을 통해 쉽게 migrate가 가능하다.
+flyway는 운영에 배포될 때 실행되어야 한다. 이를 위해 CD환경에서는 migrate를 실행한다.
+
+```shell
+./gradlew flywayMigrate
+```
+
+단, Spring boot에서는 flyway가 자동으로 실행되는것이 기본이다.
+정책에 따라 다르겠지만 개발/테스트 환경이라면 `./gradlew bootRun`을 통해 실행하면 migrate를 자동으로 실행하며 적용되겠지만
+운영환경에서는 충분한 검토를 통해 적용되어야 할 것이다.
