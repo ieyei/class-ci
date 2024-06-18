@@ -31,26 +31,33 @@ Flyway: 데이터베이스 마이그레이션 도구
 
 마이그레이션: 데이터베이스의 스키마(schema)를 한 버전에서 다른 버전으로 업그레이드하거나 변경하는 과정이다.
 
-### 1.2 Play with CLI
-
-#### 1.2.1 Install
-
-```shell
-brew install flyway
-```
-
-### 1.2.2 Verify Installation
-
-```shell
-flyway -v
-```
-
-### 1.3 How to use Flyway
+### 1.2 How to use Flyway
 
 - [Flyway CLI and API - Commnads](https://documentation.red-gate.com/fd/commands-184127446.html)
 - [Flyway with Gradle](https://documentation.red-gate.com/fd/quickstart-gradle-184127577.html)
 
-#### 1.3.1 Migrate
+#### 1.2.1 Info
+
+현재 데이터베이스의 마이그레이션 상태에 대한 상세한 정보를 제공한다. 적용된 것과 적용될 것을 비교하여 나타내며 실패한 마이그레이션은 해당 정보를 표현해준다.
+
+![flyway-info](../../images/workshop/flyway-info.png)
+
+```shell
+#결과 
+Database: jdbc:h2:file:/Users/ieyei/test (H2 2.2)
+Schema version: 3
+
++-----------+---------+----------------------+------+---------------------+---------+----------+
+| Category  | Version | Description          | Type | Installed On        | State   | Undoable |
++-----------+---------+----------------------+------+---------------------+---------+----------+
+| Versioned | 1       | Create user table    | SQL  | 2024-03-20 21:08:32 | Success | No       |
+| Versioned | 2       | Add admin user       | SQL  | 2024-03-20 21:08:32 | Success | No       |
+| Versioned | 2.1     | Add some user        | SQL  | 2024-03-20 21:08:32 | Success | No       |
+| Versioned | 3       | Create profile table | SQL  | 2024-03-20 21:08:32 | Success | No       |
++-----------+---------+----------------------+------+---------------------+---------+----------+
+```
+
+#### 1.2.2 Migrate
 
 데이터베이스에 반영하는 과정이다. 순차적으로 실행하며, 이 버전은 메타테이블(flyway_schema_history)에 기록된다.
 
@@ -76,7 +83,7 @@ Migrating schema "PUBLIC" to version "3 - Create profile table"
 Successfully applied 4 migrations to schema "PUBLIC", now at version v3 (execution time 00:00.003s)
 ```
 
-#### 1.3.2 Validate
+#### 1.2.3 Validate
 
 마이그레이션 스크립트와 데이터베이스의 현재 상태를 비교하여 일치하는지 확인하는 과정이다. 불일치를 찾아내서 실수나 오류가 발생하기 전에 미리 알려준다.
 
@@ -94,33 +101,7 @@ Database: jdbc:h2:file:/Users/ieyei/test (H2 2.2)
 Successfully validated 4 migrations (execution time 00:00.014s)
 ```
 
-
-#### 1.3.3 Info
-
-현재 데이터베이스의 마이그레이션 상태에 대한 상세한 정보를 제공한다. 적용된 것과 적용될 것을 비교하여 나타내며 실패한 마이그레이션은 해당 정보를 표현해준다.
-
-![flyway-info](../../images/workshop/flyway-info.png)
-
-```shell
-FLYWAY_URL=jdbc:h2:file:~/test \
-FLYWAY_LOCATIONS=filesystem:$(pwd)/src/main/resources/db/migration \
-flyway info
-
-#결과 
-Database: jdbc:h2:file:/Users/ieyei/test (H2 2.2)
-Schema version: 3
-
-+-----------+---------+----------------------+------+---------------------+---------+----------+
-| Category  | Version | Description          | Type | Installed On        | State   | Undoable |
-+-----------+---------+----------------------+------+---------------------+---------+----------+
-| Versioned | 1       | Create user table    | SQL  | 2024-03-20 21:08:32 | Success | No       |
-| Versioned | 2       | Add admin user       | SQL  | 2024-03-20 21:08:32 | Success | No       |
-| Versioned | 2.1     | Add some user        | SQL  | 2024-03-20 21:08:32 | Success | No       |
-| Versioned | 3       | Create profile table | SQL  | 2024-03-20 21:08:32 | Success | No       |
-+-----------+---------+----------------------+------+---------------------+---------+----------+
-```
-
-#### 1.3.4 Baseline
+#### 1.2.4 Baseline
 
 기존에 있던 데이터베이스에 flyway를 도입할 때 사용한다.
 
@@ -302,10 +283,47 @@ ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);
 ./gradlew flywayInfo
 ```
 
-## 2. Integrate to CI
+## 2. Integrate to CI/CD
 
 CI에서 Flyway Script의 검증과 예상되는 결과에 대한 리뷰 과정이 필요하다. 이 목적을 달성하기 위해 Flyway에서는 validate 와 info기능을 가지고 있다.
 
-Github Action에서 간단한 리뷰 Gate를 만들어본다.
+### 2.1 Validate @ CI
 
-CI 예시
+CI환경에서 여태까지의 flyway script들이 변경되지 않았는지 검증이 필요하다. 다양한 사람들의 수많은 PR을 검증하다보면, 설계가 변경되고 컬럼이 수정되는 여러 상황들을 피해야 한다.
+이런 환경들을 각 계 별로 견고하게 유지하고 싶다면, Validate하는 과정이 필요하다.
+
+Validate는 현재의 flyway script들과 배포되어 있는 상황을 비교하는 작업이다. 따라서 *신규 버전이 올라가는 경우* 해당 내용은 데이터베이스에 반영되지 않은 내용이므로 fail이 된다.
+
+예) 데이터베이스에 반영되지 않은 신규 버전을 Validate 할 때의 에러 (pending)
+
+```text
+> Task :flywayValidate FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':flywayValidate'.
+> Error occurred while executing flywayValidate
+  Validate failed: Migrations have failed validation
+  Detected resolved migration not applied to database: 3.
+  To fix this error, either run migrate, or set -ignoreMigrationPatterns='*:pending'.
+  Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+```
+
+현재 시점의 Info를 보면 Pending 이라고 표현되어 Validate 단계에서는 차이가 발견되어 실패함을 알 수 있다.
+
+```text
++-----------+---------+----------------------+------+--------------+---------+----------+
+| Category  | Version | Description          | Type | Installed On | State   | Undoable |
++-----------+---------+----------------------+------+--------------+---------+----------+
+...
+| Versioned | 3       | Create profile table | SQL  |              | Pending | No       |
++-----------+---------+----------------------+------+--------------+---------+----------+
+```
+
+CI에서는 migrate 전 데이터베이스의 견고함을 확인하기 위함이므로 `-ignoreMigrationPatterns='*:pending'` 를 추가해 신규 버전의 스키마를 제외한 나머지를 검증하도록 한다.
+
+
+2.2 migrate @ CD
+
+flyway와 gradle의 통합을 통해 쉽게 migrate가 가능하다.
