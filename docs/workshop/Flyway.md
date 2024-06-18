@@ -59,6 +59,10 @@ echo https://$C9_PID.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/
 echo https://$C9_PID.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/h2
 ```
 
+> **Warning**
+> 서드 파티 쿠키가 사용 중지됨(Third-party cookies disabled) 이 표시되는 경우
+> https://docs.aws.amazon.com/ko_kr/cloud9/latest/user-guide/troubleshooting.html#troubleshooting-preview-group 을 따른다
+
 확인되었으면 ctrl+c로 서버를 종료한다.
 
 아래부터는 각 기능과 실습에 대해 설명한다.
