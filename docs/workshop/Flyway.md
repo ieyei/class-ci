@@ -48,8 +48,10 @@ cd /home/ec2-user/environment/class-ci/code/flyway-example
 ```
 
 웹 애플리케이션 화면을 cloud9에서도 확인할 수 있다. 이를 통해 서버에 접속할 수 있다.
+
+![cloud9-preview.png](../../images/workshop/cloud9-preview.png)
 ```shell
-# 아래 명령어를 통해 나온 주소를 브라우저로 접근한다
+# 또는 아래 명령어를 통해 나온 주소를 브라우저로 접근한다
 # hello world
 echo https://$C9_PID.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/
 
