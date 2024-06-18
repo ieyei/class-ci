@@ -37,12 +37,11 @@ Flyway: 데이터베이스 마이그레이션 도구
 - [Flyway CLI and API - Commnads](https://documentation.red-gate.com/fd/commands-184127446.html)
 - [Flyway with Gradle](https://documentation.red-gate.com/fd/quickstart-gradle-184127577.html)
 
-** 실습은 아래 경로에서 진행한다**
+**실습은 아래 경로에서 진행한다**
 ```
 cd code/flyway-example
 ```
 
-`-PprojectDir=$PWD` 를 통해 현재 디렉토리에 sqlite db를 생성해 실행한다. 잘못된 경우, database를 없애고 싶다면 test.mv.db 파일을 삭제하면 된다.
 
 
 #### 1.2.1 Info
@@ -54,7 +53,7 @@ cd code/flyway-example
 
 ```shell
 #결과
-./gradlew flywayInfo -PprojectDir=$PWD
+./gradlew flywayInfo -PprojectDir=$PWD  #-PprojectDir=$PWD 를 통해 현재 디렉토리에 h2 db를 생성해 실행한다. 잘못된 경우, database를 없애고 싶다면 test.mv.db 파일을 삭제하면 된다.
 
 > Task :flywayInfo
 Schema version: << Empty Schema >>
@@ -80,8 +79,6 @@ Schema version: << Empty Schema >>
 # 결과
 BUILD SUCCESSFUL in 696ms
 1 actionable task: 1 executed
-
-
 ```
 
 #### 1.2.3 Validate
