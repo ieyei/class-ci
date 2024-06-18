@@ -544,7 +544,9 @@ Trivy Findings plugin > Show settings 클릭
 또는 IntelliJ 설정(shift 2번 연속 클릭) - path to Trivy  클릭
 ![trivy-windows-setting1.png](../../images/workshop/trivy-windows-setting1.png)
 
+
 Path to Trivy 설정에서 다운로드 받은 trivy.exe 파일을 지정  
+
 ![trivy-windows-setting2.png](../../images/workshop/trivy-windows-setting2.png)
 
 ### Run trivy
