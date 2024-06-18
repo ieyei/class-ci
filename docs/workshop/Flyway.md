@@ -39,10 +39,27 @@ Flyway: 데이터베이스 마이그레이션 도구
 
 **실습은 아래 경로에서 진행한다**
 ```
-cd code/flyway-example
+cd /home/ec2-user/environment/class-ci/code/flyway-example
+```
+들어가기 앞서, 먼저 애플리케이션을 실행해본다.
+
+```shell
+./gradlew bootRun
 ```
 
+그 후 현재 접속되어있는 URL을 보면 고유의 URL이 나타난다. 이를 통해 서버에 접속할 수 있다.
+- Cloud9 URL 예) https://ap-northeast-2.console.aws.amazon.com/cloud9/ide/**55555555555555556c23825cfb**?region=ap-northeast-2
+- 웹 접속경로: https://**55555555555555556c23825cfb**.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/
 
+아래 주소로 접속이 되는지 확인
+```
+https://...vfs.cloud9.ap-northeast-2.amazonaws.com:8080
+https://...vfs.cloud9.ap-northeast-2.amazonaws.com:8080/h2
+```
+
+확인되었으면 ctrl+c로 서버를 종료한다.
+
+아래부터는 각 기능과 실습에 대해 설명한다.
 
 #### 1.2.1 Info
 
@@ -53,7 +70,45 @@ cd code/flyway-example
 
 ```shell
 #결과
-./gradlew flywayInfo -PprojectDir=$PWD  #-PprojectDir=$PWD 를 통해 현재 디렉토리에 h2 db를 생성해 실행한다. 잘못된 경우, database를 없애고 싶다면 test.mv.db 파일을 삭제하면 된다.
+./gradlew flywayInfo
+
+```
+```shell
+#결과
+mspuser:~/environment/class-ci/code/flyway-example (main) $ ./gradlew flywayInfo
+> Task :flywayInfo
+Schema version: 3
++-----------+---------+----------------------+------+---------------------+---------+----------+
+| Category  | Version | Description          | Type | Installed On        | State   | Undoable |
++-----------+---------+----------------------+------+---------------------+---------+----------+
+| Versioned | 1       | Create user table    | SQL  | 2024-06-18 05:13:19 | Success | No       |
+| Versioned | 2       | Add admin user       | SQL  | 2024-06-18 05:13:19 | Success | No       |
+| Versioned | 2.1     | Add some user        | SQL  | 2024-06-18 05:13:19 | Success | No       |
+| Versioned | 3       | Create profile table | SQL  | 2024-06-18 05:13:19 | Success | No       |
++-----------+---------+----------------------+------+---------------------+---------+----------+
+```
+spring boot에서는 `./gradlew bootRun`을 실행하면 자동으로 migrate가 실행된다. 현재 application.properties에 정의된 db정보를 통해 실행된다.
+따라서 `./gradlew flywayInfo`를 실행하면 현재 적용된 마이그레이션 정보를 확인한 것이다.
+
+
+#### 1.2.2 Migrate
+
+데이터베이스에 반영하는 과정이다. 순차적으로 실행하며, 이 버전은 메타테이블(flyway_schema_history)에 기록된다.
+
+기존에 마이그레이션 된 내용을 물리적으로 초기화하기 위해 h2 database파일을 삭제한다.
+
+![flyway-migrate](../../images/workshop/flyway-migrate.png)
+
+```shell
+ls ./test*.db
+rm ./test*.db
+./gradlew flywayInfo 
+```
+
+데이터베이스가 삭제되었으므로 Pending 상태로 되돌아간다. flyway script와 database의 현재 상태를 비교하여 일치하는지 확인하는 과정이다.
+```shell
+#결과
+mspuser:~/environment/class-ci/code/flyway-example (main) $ ./gradlew flywayInfo 
 
 > Task :flywayInfo
 Schema version: << Empty Schema >>
@@ -67,18 +122,25 @@ Schema version: << Empty Schema >>
 +-----------+---------+----------------------+------+--------------+---------+----------+
 ```
 
-#### 1.2.2 Migrate
-
-데이터베이스에 반영하는 과정이다. 순차적으로 실행하며, 이 버전은 메타테이블(flyway_schema_history)에 기록된다.
-
-![flyway-migrate](../../images/workshop/flyway-migrate.png)
-
+Migration을 실행한다. 수행 후 State가 Success로 변경되었다.
 ```shell
-./gradlew flywayMigrate -PprojectDir=$PWD
-
+./gradlew flywayMigrate flywayInfo
+```
+```shell
+mspuser:~/environment/class-ci/code/flyway-example (main) $ ./gradlew flywayMigrate
 # 결과
-BUILD SUCCESSFUL in 696ms
-1 actionable task: 1 executed
+mspuser:~/environment/class-ci/code/flyway-example (main) $ ./gradlew flywayMigrate flywayInfo
+
+> Task :flywayInfo
+Schema version: 3
++-----------+---------+----------------------+------+---------------------+---------+----------+
+| Category  | Version | Description          | Type | Installed On        | State   | Undoable |
++-----------+---------+----------------------+------+---------------------+---------+----------+
+| Versioned | 1       | Create user table    | SQL  | 2024-06-18 05:39:38 | Success | No       |
+| Versioned | 2       | Add admin user       | SQL  | 2024-06-18 05:39:38 | Success | No       |
+| Versioned | 2.1     | Add some user        | SQL  | 2024-06-18 05:39:38 | Success | No       |
+| Versioned | 3       | Create profile table | SQL  | 2024-06-18 05:39:38 | Success | No       |
++-----------+---------+----------------------+------+---------------------+---------+----------+
 ```
 
 #### 1.2.3 Validate
@@ -90,24 +152,27 @@ BUILD SUCCESSFUL in 696ms
 ![flyway-validate](../../images/workshop/flyway-validate.png)
 
 ```shell
-./gradlew flywayValidate -PprojectDir=$PWD
-
+./gradlew flywayValidate 
+```
+```shell
 #결과
-Database: jdbc:h2:file:/Users/ieyei/test (H2 2.2)
+...
 Successfully validated 4 migrations (execution time 00:00.014s)
 ```
 
 #### 1.2.4 Clean
 
-데이터베이스 내의 모든 스키마, 테이블, 뷰, 저장 프로시저, 함수, 트리거 등을 삭제하여 데이터베이스를 초기 상태로 되돌리는 기능이다. 운영에서 사용하면 안되기 때문에 나름의 안전장치가 포함되어있다.
+데이터베이스 내의 모든 스키마, 테이블, 뷰, 저장 프로시저, 함수, 트리거 등을 삭제하여 데이터베이스를 초기 상태로 되돌리는 기능이다.
+운영에서 사용하면 안되기 때문에 나름의 안전장치가 포함되어있다. (예: cleanDisabled)
 
 ![flyway-clean](../../images/workshop/flyway-clean.png)
 
 ```shell
-./gradlew flywayClean -Pflyway.cleanDisabled="false" -PprojectDir=$PWD
-./gradlew flywayInfo -PprojectDir=$PWD
+./gradlew flywayClean -Pflyway.cleanDisabled="false" 
+./gradlew flywayInfo 
+```
 
-
+```shell
 #결과: 모두 지워져 State 가 Pending으로 되돌아간다.
 +-----------+---------+----------------------+------+--------------+---------+----------+
 | Category  | Version | Description          | Type | Installed On | State   | Undoable |
@@ -128,9 +193,11 @@ Successfully validated 4 migrations (execution time 00:00.014s)
 
 ```shell
 # baseline과 info를 실행한다.
-./gradlew flywayBaseline flywayInfo -PprojectDir=$PWD -Pflyway.baselineVersion=0.1 -Pflyway.baselineDescription="init schema"
-
+./gradlew flywayBaseline flywayInfo  -Pflyway.baselineVersion=0.1 -Pflyway.baselineDescription="init schema"
+```
+```shell
 #결과
+mspuser:~/environment/class-ci/code/flyway-example (main) $ ./gradlew flywayBaseline flywayInfo  -Pflyway.baselineVersion=0.1 -Pflyway.baselineDescription="init schema"
 > Task :flywayInfo
 Schema version: 0.1
 +-----------+---------+----------------------+----------+---------------------+----------+----------+
@@ -212,19 +279,19 @@ dependencies {
 }
 ```
 
-이 상태에서 gradle :bootRun을 실행하면, flyway가 자동으로 실행되어 데이터베이스를 초기화하고, 마이그레이션을 적용한다.
+이 상태에서 `./gradlew bootRun`을 실행하면, flyway가 자동으로 실행되어 데이터베이스를 초기화하고, 마이그레이션을 적용한다.
 
 `org.flywaydb:flyway-core` 는 Spring boot과의 통합을 위해 필요하다.
 이를 위한 설정들은 spring-boot-autoconfigure 에 기본적으로 준비가 되어있다. 따라서 자세한 spring과의 연계설정은 `org.springframework.boot.autoconfigure.flyway.FlywayProperties` 를 참조해 커스텀 하는데 사용을 하면 좋다.
-개발 단계에서 로컬 설정을 공유하기 위해 application.properties 파일에 일부 설정을 한다.
+개발 단계에서 로컬 설정을 공유하기 위해 application.properties 파일에 설정을 할 수 있다.
 
-spring boot이 작동하며 flyway가 실행되는 구체적인 내용은 `org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration Flyway flyway()` 빈을 통해 확인할 수 있다.
+spring boot이 작동하며 flyway가 실행되는 구체적인 내용은 `org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration Flyway flyway()` Bean을 통해 확인할 수 있다.
 
-아래 명령어를 통해 실행한다. 로그에 migration 이 되었는지 확인한다.
+다시한번 아래 명령어를 통해 실행한다. 로그에 migration 이 되었는지 확인한다.
 
 ```shell
-rm ~/test*.db   # 기존 데이터베이스 삭제
-./gradlew bootRun
+rm ./test*.db   # 기존 데이터베이스 삭제
+./gradlew bootRun  # 새로 마이그레이션
 ```
 
 결과
@@ -245,7 +312,8 @@ rm ~/test*.db   # 기존 데이터베이스 삭제
 2024-03-15T09:27:17.255+09:00  INFO 65279 --- [           main] c.e.flyway.FlywayExampleApplication      : Started FlywayExampleApplication in 1.124 seconds (process running for 1.266)
 ```
 
-`http://localhost:8080/h2` 에서 확인 후 아래 명령어를 통해 테이블을 삭제한다.
+`https://**자신의 cloud9 ID**.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/h2` 에서 확인 후 아래 명령어를 통해 테이블을 삭제할 수도 있다.
+h2 jdbc url은 `jdbc:h2:/home/ec2-user/environment/class-ci/code/flyway-example/test` 로 설정한다.
 
 ```sql
 DROP TABLE IF EXISTS user_profiles;
@@ -253,7 +321,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS flyway_schema_history;
 ```
 
-gradle task를 이용해 flyway를 실행할 수 있다. 이를 위해 의존성을 추가한다.
+gradle task를 이용해 flyway를 실행할 수 있다. 이를 위해 의존성을 추가하였다.
 
 ```gradle
 plugins {
