@@ -25,7 +25,7 @@ Scanners (what Trivy can find there):
 ### Install from GitHub Release (Official)
 
 ```
-curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin v0.52.2
+curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin latest
 
 ```
 
@@ -540,10 +540,13 @@ Windows환경에서는 IntelliJ trivy플러그인을 통해 바이너리가 다�
 
 https://github.com/aquasecurity/trivy/releases/tag/v0.52.2 이동, [trivy_0.52.2_windows-64bit.zip](https://github.com/aquasecurity/trivy/releases/download/v0.52.2/trivy_0.52.2_windows-64bit.zip) 다운로드, 압축해제
 
-IntelliJ 설정 - path to Trivy  
+Trivy Findings plugin > Show settings 클릭
+또는 IntelliJ 설정(shift 2번 연속 클릭) - path to Trivy  클릭
 ![trivy-windows-setting1.png](../../images/workshop/trivy-windows-setting1.png)
 
-Path to Trivy 설정을 trivy.exe 파일로 지정  
+
+Path to Trivy 설정에서 다운로드 받은 trivy.exe 파일을 지정  
+
 ![trivy-windows-setting2.png](../../images/workshop/trivy-windows-setting2.png)
 
 ### Run trivy
