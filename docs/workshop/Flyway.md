@@ -11,13 +11,13 @@ Flyway는 데이터베이스 마이그레이션 도구이다. 이 문서에서�
     - [1.2.1 Info](#121-info)
     - [1.2.2 Migrate](#122-migrate)
     - [1.2.3 Validate](#123-validate)
-    - [1.2.4 Baseline](#124-baseline)
-    - [1.2.5 Clean](#135-clean)
-  - [1.3 How works Flyway(이론)](#14-how-works-flyway)
-    - [1.3.1 flyway_schema_history Table](#141-flyway_schema_history-table)
-  - [1.4. Play With Gradle](#15-play-with-gradle)
-    - [1.4.1 build.gradle](#151-buildgradle)
-    - [1.4.2 Add Versioned Migration](#152-add-versioned-migration)
+    - [1.2.4 Clean](#124-clean)
+    - [1.2.5 Baseline](#125-baseline)
+  - [1.4 How works Flyway(이론)](#14-how-works-flyway(이론))
+    - [1.4.1 flyway_schema_history Table](#141-flyway_schema_history-table)
+  - [1.5. Play With Gradle](#15-play-with-gradle)
+    - [1.5.1 build.gradle](#151-buildgradle)
+    - [1.5.2 Add Versioned Migration](#152-add-versioned-migration)
 - [2. Integrate to CI/CD](#2-integrate-to-cicd)
   - [2.1 Validate @ CI](#21-validate--ci)
   - [2.2 migrate @ CD](#22-migrate--cd)
@@ -47,14 +47,14 @@ cd /home/ec2-user/environment/class-ci/code/flyway-example
 ./gradlew bootRun
 ```
 
-그 후 현재 접속되어있는 URL을 보면 고유의 URL이 나타난다. 이를 통해 서버에 접속할 수 있다.
-- Cloud9 URL 예) https://ap-northeast-2.console.aws.amazon.com/cloud9/ide/**55555555555555556c23825cfb**?region=ap-northeast-2
-- 웹 접속경로: https://**55555555555555556c23825cfb**.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/
+웹 애플리케이션 화면을 cloud9에서도 확인할 수 있다. 이를 통해 서버에 접속할 수 있다.
+```shell
+# 아래 명령어를 통해 나온 주소를 브라우저로 접근한다
+# hello world
+echo https://$C9_PID.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/
 
-아래 주소로 접속이 되는지 확인
-```
-https://...vfs.cloud9.ap-northeast-2.amazonaws.com:8080
-https://...vfs.cloud9.ap-northeast-2.amazonaws.com:8080/h2
+# h2 console
+echo https://$C9_PID.vfs.cloud9.ap-northeast-2.amazonaws.com:8080/h2
 ```
 
 확인되었으면 ctrl+c로 서버를 종료한다.
@@ -263,11 +263,11 @@ flyway_schema_history 테이블은 Flyway가 데이터베이스 마이그레이�
 | 4 | 0.4 | ALTER XX TABLES RENAME FINAL UPDATE TIMESTAMP | SQL | V0_4__ALTER_XX_TABLES_RENAME_FINAL_UPDATE_TIMESTAMP.sql | -1577194743 | flyway | 20:53.2 | 243 | TRUE |
 | 5 | 0.5 | ALTER table setting batch schedule main | SQL | V0_5__ALTER_table_setting_batch_schedule_main.sql | -1239577890 | flyway | 13:23.3 | 91  | TRUE |
 
-### 1.4. Play With Gradle
+### 1.5. Play With Gradle
 
 Spring Boot과 통합하기 위해 Gradle plugin이 준비되어 있다. 이를 통해 빌드 스크립트에 마이그레이션을 쉽게 추가할 수 있으며, 쉽게 빌드 프로세스에 통합할 수 있다.
 
-#### 1.4.1 build.gradle
+#### 1.5.1 build.gradle
 
 ```gradle 최소한의 설정
 dependencies {
@@ -340,7 +340,7 @@ flyway {
 ./gradlew tasks | grep flyway
 ```
 
-#### 1.4.2 Add Versioned Migration
+#### 1.5.2 Add Versioned Migration
 
 새 마이그레이션 파일을 추가한다.
 
