@@ -37,10 +37,10 @@ Extensions(Ctrl+Shift+X) 클릭 > remote 검색 > `Remote - SSH` 설치
 
 1. `F1` 클릭 후 **Remote-SSH: Connect to Host...** 명령어 실행. 
     ![Connect to Host](../../images/workshop/connectToHost.png)
-2. Configure SSH Hosts...
-    ![Configure SSH Hosts](../../images/workshop/configureSshHosts.png)
+2. Configure SSH Hosts...  
+    ![Configure SSH Hosts](../../images/workshop/configureSshHosts.png)  
     home directory 아래 `~/.ssh/config` 선택
-3. config 설정
+3. config 설정  
     Host, HostName, IdentityFile 변경
    ```
    Host xxx.compute-1.amazonaws.com
