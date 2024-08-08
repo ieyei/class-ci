@@ -169,6 +169,7 @@ git config --global user.email you@example.com
 Code 수정 후 push & GitHub Action 확인
 ```bash
 cd ~/environment/class-ci/
+git pull
 echo "hello" >> ./code/flyway-example/README.md
 
 git add .
